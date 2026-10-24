@@ -8,6 +8,12 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
+# Horário de Brasília, qualquer que seja o fuso da máquina (o GitHub Actions roda em UTC).
+$TzBrasilia = [TimeZoneInfo]::FindSystemTimeZoneById('E. South America Standard Time')
+function Get-Agora([string]$format = 'yyyy-MM-ddTHH:mm:sszzz') {
+    [DateTimeOffset]::UtcNow.ToOffset($TzBrasilia.GetUtcOffset([DateTimeOffset]::UtcNow)).ToString($format)
+}
+
 $VerdictLabels = [ordered]@{
     FATO            = 'FATO'
     NAO_E_BEM_ASSIM = 'NÃO É BEM ASSIM'
@@ -213,7 +219,7 @@ function ConvertTo-Scan($doc, $claims, [string]$id, $fonte, [switch]$Publico) {
     $scan = [ordered]@{
         id          = $id
         modo        = if ($Publico) { 'publico' } else { 'completo' }
-        extraidoEm  = (Get-Date -Format 'yyyy-MM-ddTHH:mm:sszzz')
+        extraidoEm  = (Get-Agora)
         fonte       = $fonte
         url         = $doc.Url
         debate      = Get-DebateName $doc.Titulo
@@ -244,7 +250,7 @@ function Write-Markdown($doc, $claims, [string]$path, $fonte, [switch]$Publico) 
     & $L ('fonte: ' + (Format-Yaml $doc.Url))
     & $L ('publicado_em: ' + (Format-Yaml $doc.Publicado))
     if ($doc.Modificado) { & $L ('modificado_em: ' + (Format-Yaml $doc.Modificado)) }
-    & $L ('extraido_em: ' + (Format-Yaml (Get-Date -Format 'yyyy-MM-ddTHH:mm:sszzz')))
+    & $L ('extraido_em: ' + (Format-Yaml (Get-Agora)))
     if ($fonte) {
         & $L ('fonte_baixada_em: ' + (Format-Yaml $fonte.baixadoEm))
         & $L ('fonte_sha256: ' + $fonte.sha256)

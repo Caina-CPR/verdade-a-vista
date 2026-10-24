@@ -20,13 +20,12 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
+      # Os horários gravados já saem em horário de Brasília (ver Get-Agora em lib/FatoOuFake.ps1).
       - name: Varrer debates
         shell: powershell
-        run: |
-          tzutil /s "E. South America Standard Time"
-          .\scripts\varrer.ps1 -Publico
+        run: .\scripts\varrer.ps1 -Publico
 
       # Grava mesmo se algum debate falhou: o erro fica registrado em data/status.json.
       - name: Salvar resultados
@@ -40,6 +39,6 @@ jobs:
             echo "Nada para salvar."
             exit 0
           fi
-          git commit -m "Varredura $(TZ=America/Sao_Paulo date '+%d/%m %H:%M')"
+          git commit -m "Varredura $(TZ=BRT3 date '+%d/%m %H:%M') (Brasília)"
           git pull --rebase
           git push

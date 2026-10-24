@@ -65,7 +65,7 @@ function Invoke-Varredura {
     $scansDir = Join-Path $DataDir 'scans'
     $mdDir = Join-Path $DataDir 'md'
     New-Item -ItemType Directory -Force -Path $scansDir, $mdDir | Out-Null
-    $agora = Get-Date -Format 'yyyy-MM-ddTHH:mm:sszzz'
+    $agora = Get-Agora
 
     try {
         $html = Get-Html $Url
@@ -81,7 +81,7 @@ function Invoke-Varredura {
     $fonte = [ordered]@{ url = $Url; baixadoEm = $agora; bytes = $Utf8NoBom.GetByteCount($html); sha256 = Get-Sha256 $html }
     $claims = Add-ClaimIds $doc
     # Data/hora + debate, para duas páginas varridas no mesmo segundo não se sobrescreverem.
-    $id = '{0}-{1}' -f (Get-Date -Format 'yyyyMMdd-HHmmss'), (ConvertTo-Slug (Get-DebateName $doc.Titulo))
+    $id = '{0}-{1}' -f (Get-Agora 'yyyyMMdd-HHmmss'), (ConvertTo-Slug (Get-DebateName $doc.Titulo))
     $scan = ConvertTo-Scan $doc $claims $id $fonte -Publico:$Publico
 
     $historico = Get-Historico $DataDir
