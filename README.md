@@ -24,7 +24,23 @@ GitHub Actions (a cada 10 min)              Vercel (site estático)
   sobrescrito a cada vez. Esse branch não gera deploy (`vercel.json`), o que mantém o site dentro do
   limite de deploys diários da Vercel. A página lê esse arquivo direto do GitHub e se atualiza sozinha.
 - O site na Vercel só lê arquivos. Não há servidor nem banco de dados.
-- O GitHub pode atrasar execuções agendadas em alguns minutos quando está sobrecarregado.
+- O GitHub pode atrasar ou pular execuções agendadas quando está sobrecarregado. Por isso há
+  também um disparo pelo seu computador (abaixo).
+
+### Disparo pelo seu computador
+
+`scripts/instalar-disparo.ps1` cria uma tarefa do Windows que, a cada 10 minutos, dispara o
+workflow com o GitHub CLI (`gh`, precisa de `gh auth login` feito uma vez). Se o GitHub já rodou a
+varredura há menos de 8 minutos, a tarefa pula a vez. Ela só roda com o computador ligado e você
+logado; o agendamento do GitHub continua valendo como reserva.
+
+```powershell
+.\scripts\instalar-disparo.ps1              # instala ou atualiza (a cada 10 minutos)
+.\scripts\instalar-disparo.ps1 -Minutos 15  # outro intervalo
+.\scripts\instalar-disparo.ps1 -Remover     # remove
+```
+
+Log: `%LOCALAPPDATA%\VerdadeAVista\disparo.log`.
 
 ## Conferir a varredura (auditoria)
 
