@@ -1,0 +1,814 @@
+{
+    "id":  "20261024-004634-band",
+    "modo":  "publico",
+    "extraidoEm":  "2026-10-24T00:46:34-03:00",
+    "fonte":  {
+                  "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/19/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-band-no-2o-turno-das-eleicoes-2026.ghtml",
+                  "baixadoEm":  "2026-10-24T00:46:33-03:00",
+                  "bytes":  1180004,
+                  "sha256":  "d6ee2923db67b8779ff0b6c62a737c36cfc42f4f16b4243e3b47873ffcb15fd9"
+              },
+    "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/19/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-band-no-2o-turno-das-eleicoes-2026.ghtml",
+    "debate":  "Band",
+    "titulo":  "FATO OU FAKE: Debate Flávio Bolsonaro x Lula na Band na eleição 2026",
+    "publicadoEm":  "2026-10-19T09:54:48.815-03:00",
+    "modificadoEm":  "2026-10-22T14:52:30.221-03:00",
+    "emAndamento":  false,
+    "rotulos":  {
+                    "FATO":  "FATO",
+                    "NAO_E_BEM_ASSIM":  "NÃO É BEM ASSIM",
+                    "FAKE":  "FAKE"
+                },
+    "totais":  {
+                   "falas":  35,
+                   "vereditos":  37
+               },
+    "candidatos":  [
+                       {
+                           "nome":  "Flávio Bolsonaro",
+                           "partido":  "PL",
+                           "falas":  17,
+                           "totalVereditos":  18,
+                           "vereditos":  {
+                                             "FATO":  5,
+                                             "NAO_E_BEM_ASSIM":  4,
+                                             "FAKE":  9
+                                         }
+                       },
+                       {
+                           "nome":  "Lula",
+                           "partido":  "PT",
+                           "falas":  18,
+                           "totalVereditos":  19,
+                           "vereditos":  {
+                                             "FATO":  11,
+                                             "NAO_E_BEM_ASSIM":  5,
+                                             "FAKE":  3
+                                         }
+                       }
+                   ],
+    "alegacoes":  [
+                      {
+                          "id":  "flavio-bolsonaro-01",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Essa dívida que o atual governo está deixando, de R$ 11 trilhões."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-02",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Foi o presidente [Jair] Bolsonaro que passou para no mínimo R$ 600 do Bolsa Família. Você sabia disso? Você lembra disso? Porque, na época do governo Lula, ele simplesmente abandonou vocês. Era R$ 75 para um, R$ 100 para outro, em média R$ 190. O Bolsonaro triplicou esse valor."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-03",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Eu fui até lá, aos Estados Unidos, para defender as empresas e os produtos brasileiros. Sabe o que o governo fez? Não mandou ninguém. Não mandou nem unzinho para ir lá te defender."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-04a",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "A declaração de Flávio Bolsonaro sobre a condenação de Lula em primeira e segunda instância e no STJ"
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-04b",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "A declaração de Flávio Bolsonaro sobre a condenação de Lula no STF"
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-05",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você vai ver lá o áudio do [ex-banqueiro Daniel] Vorcaro [controlador do Master], em que ele fala o seguinte: \u0027O filme do Bolsonaro foi tudo bem, tudo certinho. O filme do Lula teve R$ 30 milhões por fora no Instituto Lula\u0027."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-06",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "[Governo de Lula registrou] recorde de mulher assassinada."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-07",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Você já gastou com a Janja R$ 7 bilhões."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-08",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "A gente vai falar no próximo bloco aqui sobre prosperidade, e não sobre o legado que ele está deixando, um monte de recorde negativo [...], recorde de empresa fechada [...]."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-09",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "[Eu] Nunca quis tirar nada disso [código de rastreamento de munições]."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-10",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Até agora [as propostas do governo Lula para segurança pública] não fizeram efeito, né? Vocês estão vendo a redução aí de roubo de celular?"
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-11",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você [Lula] pode explicar por que 73% dos presidiários votaram em você?"
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-12",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Mais de 40 milhões do Brasil moram em áreas conflagradas, áreas que são dominadas por esses narcoterroristas."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-13",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "[Lula] Vetou o fim da saidinha, a gente teve que derrubar o veto no Congresso Nacional."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-14",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "A Polícia Federal até agora não foi atrás do seu filho."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-15",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Ele [Eduardo Bolsonaro] está exilado, perseguido."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-16",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Não foi você que prendeu [o ex-banqueiro Daniel] Vorcaro [controlador do Master]. Foi o ministro André Mendonça [do Supremo Tribunal Federal], que você [Lula] diz que é seu inimigo."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-17",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Lula, com você a criminalidade explodiu no Brasil."
+                      },
+                      {
+                          "id":  "lula-01",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Fui o único presidente que fez superávit nos oito anos de governo."
+                      },
+                      {
+                          "id":  "lula-02",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Tenho orgulho de ser o primeiro presidente da República a ter conseguido dois graus de investimento, de 2007 a 2010."
+                      },
+                      {
+                          "id":  "lula-03",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Ele sabe que, quando eles governaram o país, [...] ficou um déficit de 2,8%."
+                      },
+                      {
+                          "id":  "lula-04a",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "A declaração de Lula sobre os 7,5% de crescimento em 2010"
+                      },
+                      {
+                          "id":  "lula-04b",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FAKE",
+                          "alegacao":  "A declaração de Lula crescimento superior a 3% somente depois de 2023"
+                      },
+                      {
+                          "id":  "lula-05",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Quando eu cheguei na Presidência em 2023, este país, que tinha tido 18 mil médicos do Mais Médicos, estava só com 12 mil médicos. Hoje, nós estamos com 27 mil, quase 28 mil médicos."
+                      },
+                      {
+                          "id":  "lula-06",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "E é importante lembrar que, quando eu cheguei à Presidência, este país devia US$ 30 bilhões ao FMI [Fundo Monetário Internacional]."
+                      },
+                      {
+                          "id":  "lula-07",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "E estamos fazendo com que a economia volte a crescer. Depois de muitos anos, a economia brasileira voltou a crescer no PIB industrial, de 3,4%. É um começo extraordinário."
+                      },
+                      {
+                          "id":  "lula-08",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Já perdoamos a dívida de 12,7 bilhões dos MEIs que estão devendo."
+                      },
+                      {
+                          "id":  "lula-09",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "[...] nos quatro anos do governo deles, a inflação de alimentos estava em 56,17%. Agora, nos meus quatro anos, está em 13%, quatro vezes menos."
+                      },
+                      {
+                          "id":  "lula-10",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Em 2009, você [Flávio Bolsonaro], como deputado estadual… Tinha uma discussão na Assembleia [Legislativa do Rio de Janeiro] para ampliar a licença de maternidade das funcionárias. E, de 49 deputados, você foi o único que votou contra."
+                      },
+                      {
+                          "id":  "lula-11",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Porque fomos nós que tivemos a decência de aumentar o salário mínimo acima da inflação, o que eles não fizeram em nenhum ano."
+                      },
+                      {
+                          "id":  "lula-12",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "No governo deles, eles liberaram mais de 1 milhão de armas, mais de 1 milhão de armas, e uma parte delas foi para o crime organizado, e 1,1 bilhão de balas."
+                      },
+                      {
+                          "id":  "lula-13",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Você era senador da República e foi interferir para que o policial que matou uma criança de cinco anos com uma bala de fuzil não fosse preso."
+                      },
+                      {
+                          "id":  "lula-14",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FAKE",
+                          "alegacao":  "A gente fez essa maior demarcação de terras indígenas nesse país."
+                      },
+                      {
+                          "id":  "lula-15",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Nós criamos o MEI [...]. Nós temos hoje 17,5 milhões de MEIs."
+                      },
+                      {
+                          "id":  "lula-16",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Eu já fiz a Lei Antifacção, ela foi aprovada. Já aumentamos o tempo de cadeia para aqueles que participam das facções."
+                      },
+                      {
+                          "id":  "lula-17",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você [Flávio Bolsonaro] deu emprego para a irmã e para a mulher do cara que é do Escritório do Crime, que mandou matar a Marielle."
+                      },
+                      {
+                          "id":  "lula-18",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Eu sou presidente há 12 anos e tenho um apartamento de 190 metros quadrados, de R$ 1,5 milhão. Esse cidadão [Flávio Bolsonaro], com o mesmo salário que eu, comprou uma casa de R$ 10 milhões e pagou à vista uma parte dela com o dinheiro do BRB, que está metido no caso do banco do Vorcaro."
+                      }
+                  ],
+    "checagens":  [
+                      {
+                          "id":  "flavio-bolsonaro-01",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Essa dívida que o atual governo está deixando, de R$ 11 trilhões.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-01",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-02",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Foi o presidente [Jair] Bolsonaro que passou para no mínimo R$ 600 do Bolsa Família. Você sabia disso? Você lembra disso? Porque, na época do governo Lula, ele simplesmente abandonou vocês. Era R$ 75 para um, R$ 100 para outro, em média R$ 190. O Bolsonaro triplicou esse valor.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-02",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-03",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Eu fui até lá, aos Estados Unidos, para defender as empresas e os produtos brasileiros. Sabe o que o governo fez? Não mandou ninguém. Não mandou nem unzinho para ir lá te defender.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-03",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-04",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você foi condenado em primeira instância, você foi condenado em segunda instância, você foi condenado no STJ [Superior Tribunal de Justiça], você foi condenado no STF [Supremo Tribunal Federal]. Você foi condenado em todas as instâncias, Lula, e foi descondenado pelos seus amigos.\"",
+                          "vereditoOriginal":  "- A declaração de Flávio Bolsonaro sobre a condenação de Lula em primeira e segunda instância e no STJ é #FATO.\n- A declaração de Flávio Bolsonaro sobre a condenação de Lula no STF é #FAKE.",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-04a",
+                                                "veredito":  "FATO",
+                                                "descricao":  "A declaração de Flávio Bolsonaro sobre a condenação de Lula em primeira e segunda instância e no STJ"
+                                            },
+                                            {
+                                                "id":  "flavio-bolsonaro-04b",
+                                                "veredito":  "FAKE",
+                                                "descricao":  "A declaração de Flávio Bolsonaro sobre a condenação de Lula no STF"
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-05",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você vai ver lá o áudio do [ex-banqueiro Daniel] Vorcaro [controlador do Master], em que ele fala o seguinte: \u0027O filme do Bolsonaro foi tudo bem, tudo certinho. O filme do Lula teve R$ 30 milhões por fora no Instituto Lula\u0027.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-05",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-06",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"[Governo de Lula registrou] recorde de mulher assassinada.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-06",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-07",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você já gastou com a Janja R$ 7 bilhões.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-07",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-08",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"A gente vai falar no próximo bloco aqui sobre prosperidade, e não sobre o legado que ele está deixando, um monte de recorde negativo [...], recorde de empresa fechada [...].\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-08",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-09",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"[Eu] Nunca quis tirar nada disso [código de rastreamento de munições].\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-09",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-10",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Até agora [as propostas do governo Lula para segurança pública] não fizeram efeito, né? Vocês estão vendo a redução aí de roubo de celular?\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-10",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-11",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você [Lula] pode explicar por que 73% dos presidiários votaram em você?\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-11",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-12",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Mais de 40 milhões do Brasil moram em áreas conflagradas, áreas que são dominadas por esses narcoterroristas.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-12",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-13",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"[Lula] Vetou o fim da saidinha, a gente teve que derrubar o veto no Congresso Nacional.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-13",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-14",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"A Polícia Federal até agora não foi atrás do seu filho.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-14",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-15",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Ele [Eduardo Bolsonaro] está exilado, perseguido.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-15",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-16",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Não foi você que prendeu [o ex-banqueiro Daniel] Vorcaro [controlador do Master]. Foi o ministro André Mendonça [do Supremo Tribunal Federal], que você [Lula] diz que é seu inimigo.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-16",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-17",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Lula, com você a criminalidade explodiu no Brasil.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-17",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-01",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Fui o único presidente que fez superávit nos oito anos de governo.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-01",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-02",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Tenho orgulho de ser o primeiro presidente da República a ter conseguido dois graus de investimento, de 2007 a 2010.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-02",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-03",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Ele sabe que, quando eles governaram o país, [...] ficou um déficit de 2,8%.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-03",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-04",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"É importante lembrar que este país cresceu 7,5% em 2010. E, depois que eu deixei a Presidência, ele só voltou a crescer acima de 3% depois que eu voltei à Presidência da República, por causa da compreensão do povo brasileiro.\"",
+                          "vereditoOriginal":  "- A declaração de Lula sobre os 7,5% de crescimento em 2010 é #FATO.\n- A declaração de Lula crescimento superior a 3% somente depois de 2023 é #FAKE.",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-04a",
+                                                "veredito":  "FATO",
+                                                "descricao":  "A declaração de Lula sobre os 7,5% de crescimento em 2010"
+                                            },
+                                            {
+                                                "id":  "lula-04b",
+                                                "veredito":  "FAKE",
+                                                "descricao":  "A declaração de Lula crescimento superior a 3% somente depois de 2023"
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-05",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Quando eu cheguei na Presidência em 2023, este país, que tinha tido 18 mil médicos do Mais Médicos, estava só com 12 mil médicos. Hoje, nós estamos com 27 mil, quase 28 mil médicos.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-05",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-06",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"E é importante lembrar que, quando eu cheguei à Presidência, este país devia US$ 30 bilhões ao FMI [Fundo Monetário Internacional].\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-06",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-07",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"E estamos fazendo com que a economia volte a crescer. Depois de muitos anos, a economia brasileira voltou a crescer no PIB industrial, de 3,4%. É um começo extraordinário.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-07",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-08",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Já perdoamos a dívida de 12,7 bilhões dos MEIs que estão devendo.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-08",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-09",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"[...] nos quatro anos do governo deles, a inflação de alimentos estava em 56,17%. Agora, nos meus quatro anos, está em 13%, quatro vezes menos.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-09",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-10",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Em 2009, você [Flávio Bolsonaro], como deputado estadual… Tinha uma discussão na Assembleia [Legislativa do Rio de Janeiro] para ampliar a licença de maternidade das funcionárias. E, de 49 deputados, você foi o único que votou contra.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-10",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-11",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Porque fomos nós que tivemos a decência de aumentar o salário mínimo acima da inflação, o que eles não fizeram em nenhum ano.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-11",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-12",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"No governo deles, eles liberaram mais de 1 milhão de armas, mais de 1 milhão de armas, e uma parte delas foi para o crime organizado, e 1,1 bilhão de balas.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-12",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-13",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Você era senador da República e foi interferir para que o policial que matou uma criança de cinco anos com uma bala de fuzil não fosse preso.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-13",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-14",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"A gente fez essa maior demarcação de terras indígenas nesse país.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-14",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-15",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Nós criamos o MEI [...]. Nós temos hoje 17,5 milhões de MEIs.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-15",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-16",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eu já fiz a Lei Antifacção, ela foi aprovada. Já aumentamos o tempo de cadeia para aqueles que participam das facções.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-16",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-17",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Você [Flávio Bolsonaro] deu emprego para a irmã e para a mulher do cara que é do Escritório do Crime, que mandou matar a Marielle.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-17",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-18",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eu sou presidente há 12 anos e tenho um apartamento de 190 metros quadrados, de R$ 1,5 milhão. Esse cidadão [Flávio Bolsonaro], com o mesmo salário que eu, comprou uma casa de R$ 10 milhões e pagou à vista uma parte dela com o dinheiro do BRB, que está metido no caso do banco do Vorcaro.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-18",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      }
+                  ],
+    "mudancas":  null
+}

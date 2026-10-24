@@ -1,0 +1,11 @@
+# Versão completa (com as explicações do g1): fica só no seu computador.
+data-local/
+
+# Vercel
+.vercel/
+dist/
+
+# Windows / editores
+Thumbs.db
+desktop.ini
+.vscode/

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verdade à Vista</title>
+  <meta name="description" content="Placar aberto das checagens do Fato ou Fake (g1) nos debates: quantas falas de cada candidato foram fato, fake ou não é bem assim.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b0b0b'/%3E%3Crect x='7' y='16' width='5' height='9' rx='1.5' fill='%230ca30c'/%3E%3Crect x='14' y='10' width='5' height='15' rx='1.5' fill='%23fab219'/%3E%3Crect x='21' y='6' width='5' height='19' rx='1.5' fill='%23d03b3b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <div>
+        <h1>Verdade à Vista <span class="muted">· placar das checagens</span></h1>
+        <p class="muted small" id="page-title">Nenhuma varredura ainda</p>
+      </div>
+      <div class="actions" id="actions" hidden>
+        <button id="btn-scan-all" class="btn btn--ghost" type="button" title="Varre todos os debates da lista, um depois do outro">
+          <span class="btn__spinner" aria-hidden="true"></span>
+          <span class="btn__label">Varrer todos</span>
+        </button>
+        <button id="btn-scan" class="btn btn--primary" type="button">
+          <span class="btn__spinner" aria-hidden="true"></span>
+          <span class="btn__label">Varrer agora</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="source">
+      <div class="seg seg--debates" id="debate-tabs" role="tablist" aria-label="Debate"></div>
+      <div id="url-box" hidden>
+        <label for="url" class="small muted">Página do debate selecionado. Cole outra URL do Fato ou Fake e clique em Varrer agora para adicionar um debate.</label>
+        <div class="source__row">
+          <input id="url" type="url" spellcheck="false" placeholder="https://g1.globo.com/fato-ou-fake/...">
+          <a id="source-link" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">Abrir página ↗</a>
+        </div>
+      </div>
+      <p id="auto-note" class="small muted auto-note" hidden></p>
+    </section>
+
+    <div id="alert" class="alert" hidden></div>
+
+    <section id="status" class="status" hidden></section>
+
+    <section id="empty" class="empty" hidden>
+      <h2 id="empty-title">Comece pela primeira varredura</h2>
+      <p class="muted">Clique em <strong>Varrer agora</strong>. O painel lê a página, conta os vereditos de cada candidato e guarda o resultado no histórico.</p>
+    </section>
+
+    <div id="content" hidden>
+      <section class="kpis" id="kpis"></section>
+
+      <section class="card">
+        <div class="card__head">
+          <h2>Vereditos por candidato</h2>
+          <div class="seg" id="chart-types" role="tablist" aria-label="Tipo de gráfico"></div>
+        </div>
+        <div class="chart-toolbar" id="evo-toolbar" hidden>
+          <label for="evo-metric" class="small muted">Mostrar</label>
+          <select id="evo-metric">
+            <option value="FAKE">Fake</option>
+            <option value="NAO_E_BEM_ASSIM">Não é bem assim</option>
+            <option value="FATO">Fato</option>
+            <option value="TOTAL">Total de vereditos</option>
+          </select>
+        </div>
+        <div class="legend" id="legend"></div>
+        <div class="chart-area" id="chart-area"></div>
+        <p class="small muted chart-note" id="chart-note"></p>
+        <details class="data-table">
+          <summary>Ver dados em tabela</summary>
+          <div id="data-table"></div>
+        </details>
+      </section>
+
+      <div class="grid-2">
+        <section class="card">
+          <div class="card__head">
+            <h2>Checagens</h2>
+            <div class="filters">
+              <select id="f-cand" aria-label="Filtrar candidato"><option value="">Todos os candidatos</option></select>
+              <select id="f-ver" aria-label="Filtrar veredito"><option value="">Todos os vereditos</option></select>
+            </div>
+          </div>
+          <div id="checks" class="checks"></div>
+        </section>
+
+        <aside class="card">
+          <div class="card__head">
+            <h2>Histórico</h2>
+            <span class="small muted" id="history-count"></span>
+          </div>
+          <p class="small muted history__help">Cada varredura tem o Markdown e o JSON exatamente como foram extraídos, para você conferir com a página do g1.</p>
+          <ol id="history" class="history"></ol>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="wrap footer small muted">
+    <p>Projeto independente, sem vínculo com o Grupo Globo. As checagens e os vereditos são do
+    <a href="https://g1.globo.com/fato-ou-fake/" target="_blank" rel="noopener noreferrer">Fato ou Fake (g1)</a>;
+    aqui só contamos os vereditos de cada candidato. Para ler as explicações, abra a página original.</p>
+    <p>Cada veredito conta uma vez; uma fala pode ter mais de um. Os números podem mudar enquanto o g1 atualiza a checagem.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
