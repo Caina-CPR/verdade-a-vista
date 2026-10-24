@@ -9,7 +9,9 @@ name: Varredura
 
 on:
   schedule:
-    - cron: '*/10 * * * *'   # a cada 10 minutos (UTC); o GitHub pode atrasar alguns minutos
+    # A cada 10 minutos, nos minutos 3, 13, 23... O GitHub recomenda fugir da virada da hora,
+    # quando a fila de agendamentos fica cheia e execuções podem atrasar ou ser puladas.
+    - cron: '3-59/10 * * * *'
   workflow_dispatch:          # botão "Run workflow" na aba Actions
 
 permissions:
