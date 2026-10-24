@@ -305,6 +305,7 @@ function render() {
   const has = !!state.scan;
   renderDebateTabs();
   renderDebateHead();
+  updateSiteIcon();
   $('empty').hidden = has;
   $('content').hidden = !has;
   renderHistory();
@@ -422,6 +423,48 @@ function renderSummary() {
 function truthIndex(c) {
   if (!c.totalVereditos) return 0;
   return Math.round((100 * ((c.vereditos.FATO || 0) + 0.5 * (c.vereditos.NAO_E_BEM_ASSIM || 0))) / c.totalVereditos);
+}
+
+// ---------- Ícone dinâmico ----------
+
+// Velocímetro do ícone: arcos vermelho/amarelo/verde e o ponteiro no valor v (0 a 100).
+// O ponteiro é desenhado para cima (valor 50) e girado; assim a logo do topo pode animar.
+const needleTurn = (v) => (Math.max(0, Math.min(100, v)) - 50) * 1.8;
+function gaugeIconSvg(v, needleClass = '') {
+  const at = (val, r) => { const a = Math.PI * (1 - val / 100); return `${(16 + r * Math.cos(a)).toFixed(2)} ${(21 - r * Math.sin(a)).toFixed(2)}`; };
+  const seg = (a, b, color) => `<path d="M${at(a, 10.5)}A10.5 10.5 0 0 1 ${at(b, 10.5)}" fill="none" stroke="${color}" stroke-width="4"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1a1a19"/>`
+    + seg(0, 31, '#d03b3b') + seg(35, 65, '#fab219') + seg(69, 100, '#0ca30c')
+    + `<path class="${needleClass}" d="M16 21V12.5" stroke="#f0efec" stroke-width="2.4" stroke-linecap="round" transform="rotate(${needleTurn(v).toFixed(1)} 16 21)"/>`
+    + '<circle cx="16" cy="21" r="2.6" fill="#f0efec"/></svg>';
+}
+
+// Índice geral do debate aberto: todos os vereditos de todos os candidatos juntos.
+function debateIndex(scan) {
+  const all = { vereditos: {}, totalVereditos: 0 };
+  for (const c of scan?.candidatos || []) {
+    for (const [k, n] of Object.entries(c.vereditos)) all.vereditos[k] = (all.vereditos[k] || 0) + n;
+    all.totalVereditos += c.totalVereditos;
+  }
+  return all.totalVereditos ? truthIndex(all) : null;
+}
+
+// Aba do navegador e logo do topo apontam para o índice do debate aberto.
+function updateSiteIcon() {
+  const v = debateIndex(state.scan);
+  const shown = v ?? 50;
+  document.querySelector('link[rel="icon"]').href = 'data:image/svg+xml,' + encodeURIComponent(gaugeIconSvg(shown));
+  const mark = $('brand-mark');
+  let needle = mark.querySelector('.brand__needle');
+  if (!needle) {
+    mark.innerHTML = gaugeIconSvg(50, 'brand__needle');
+    needle = mark.querySelector('.brand__needle');
+    needle.removeAttribute('transform');
+    needle.getBoundingClientRect(); // garante a animação a partir do meio
+  }
+  needle.style.transform = `rotate(${needleTurn(shown)}deg)`;
+  const d = currentDebate();
+  mark.parentElement.title = v == null ? 'Verdade à Vista' : `Índice de veracidade do ${d.titulo || 'debate'}: ${v} de 100 (todos os candidatos)`;
 }
 
 // ---------- SVG com fotos ----------

@@ -99,8 +99,9 @@ a { color: inherit; }
 .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
 .brand__mark { width: 32px; height: 32px; flex: none; }
-.brand__bg { fill: #1a1a19; }
-.brand__eye { stroke: #f0efec; }
+.brand__mark svg { width: 32px; height: 32px; display: block; }
+.brand__needle { transform-origin: 16px 21px; transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1); }
+@media (prefers-reduced-motion: reduce) { .brand__needle { transition: none; } }
 .brand__text { display: flex; flex-direction: column; min-width: 0; }
 .brand__text strong { font-size: 17px; letter-spacing: -0.01em; }
 .brand__text small { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
