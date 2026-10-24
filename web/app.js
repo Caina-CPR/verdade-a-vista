@@ -389,14 +389,12 @@ function badge(key) {
   return el('span', { class: 'badge', style: `--tone:var(${v.color})` }, el('i'), v.label.toUpperCase());
 }
 
-// Quem teve mais falas falsas: frase de destaque + barras de % Fake e % Fato.
+// Balança da verdade: frase de quem teve mais falas Fake, balança de pratos, duelo e régua.
 function renderSummary() {
   const cands = state.scan.candidatos.map((c) => ({
     ...c,
     fake: c.vereditos.FAKE || 0,
-    fato: c.vereditos.FATO || 0,
     pFake: pct(c.vereditos.FAKE || 0, c.totalVereditos),
-    pFato: pct(c.vereditos.FATO || 0, c.totalVereditos),
   }));
   const byFake = [...cands].sort((a, b) => b.pFake - a.pFake || b.fake - a.fake);
   const top = byFake[0];
@@ -408,27 +406,129 @@ function renderSummary() {
   else if (tie) lead = ['Empate: ', ...byFake.map((c, i) => [i ? ' e ' : '', el('span', { class: 'hl' }, c.nome)]).flat(), ` tiveram ${top.pFake}% das falas checadas classificadas como Fake.`];
   else lead = [el('span', { class: 'hl' }, top.nome), ` teve ${fakeText(top)}.`, ...byFake.slice(1).map((c) => ` ${c.nome}: ${c.fake} (${c.pFake}%).`)];
 
-  const max = 100;
+  const pair = cands.length === 2;
   $('summary').replaceChildren(
-    el('h2', { class: 'summary__title', id: 'summary-title' }, 'Quem teve mais falas falsas?'),
+    el('h2', { class: 'summary__title', id: 'summary-title' }, 'Balança da verdade'),
     el('p', { class: 'summary__lead' }, lead),
-    el('div', { class: 'summary__rows' }, byFake.map((c) => el('div', { class: 'summary__row' },
-      avatar(c.nome, 'md'),
-      el('div', {},
-        el('div', { class: 'summary__name' }, c.nome, el('small', {}, `${c.partido} · ${c.totalVereditos} vereditos`)),
-        el('div', { class: 'summary__meters' },
-          meterLine('Fake', c.pFake, c.fake, '--v-fake', max),
-          meterLine('Fato', c.pFato, c.fato, '--v-fato', max)))))),
+    pair ? el('div', { class: 'scale-wrap' },
+      el('div', { class: 'balance' }, el('p', { class: 'viz-label' }, 'Peso dos fakes'), balanceSvg(cands)),
+      el('div', {}, el('p', { class: 'viz-label' }, 'Lado a lado'), duel(cands))) : null,
+    el('div', { class: 'ruler' }, el('p', { class: 'viz-label' }, 'Índice de veracidade (0 a 100)'), rulerSvg(cands)),
     el('p', { class: 'summary__note' },
-      'Percentual sobre os vereditos de cada candidato. O Fato ou Fake escolhe quais falas checar, por isso comparamos proporções e não só totais.'),
+      'A balança pesa o percentual de falas classificadas como Fake: desce o lado de quem teve mais. ',
+      'O índice de veracidade é um cálculo nosso sobre os vereditos do Fato ou Fake: Fato vale 1, Não é bem assim vale 0,5 e Fake vale 0, ',
+      'e fazemos a média de cada candidato. O Fato ou Fake escolhe quais falas checar, por isso comparamos proporções e não só totais.'),
   );
 }
 
-function meterLine(label, p, n, color, max) {
-  return el('div', { class: 'meter-line', title: `${n} ${plural(n, 'veredito', 'vereditos')}` },
-    el('span', {}, label),
-    el('b', {}, `${p}%`),
-    el('span', { class: 'meter', role: 'img', 'aria-label': `${label}: ${p}%` }, el('span', { style: `width:${(p / max) * 100}%;background:var(${color})` })));
+// Fato = 1, Não é bem assim = 0,5, Fake = 0; média de 0 a 100.
+function truthIndex(c) {
+  if (!c.totalVereditos) return 0;
+  return Math.round((100 * ((c.vereditos.FATO || 0) + 0.5 * (c.vereditos.NAO_E_BEM_ASSIM || 0))) / c.totalVereditos);
+}
+
+// ---------- SVG com fotos ----------
+
+const SVGNS = 'http://www.w3.org/2000/svg';
+function s(tag, attrs = {}, ...children) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs)) if (v != null) n.setAttribute(k, v);
+  for (const c of children.flat()) if (c != null) n.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  return n;
+}
+
+let clipSeq = 0;
+// Foto redonda com anel na cor do candidato (ou iniciais, se não houver foto).
+function svgAvatar(nome, cx, cy, r) {
+  const c = candidate(nome);
+  const id = `av-clip-${++clipSeq}`;
+  return s('g', {},
+    s('circle', { cx, cy, r: r + 3, fill: candColor(nome) }),
+    s('circle', { cx, cy, r: r + 1, fill: 'var(--surface)' }),
+    c.foto
+      ? [s('clipPath', { id }, s('circle', { cx, cy, r })),
+        s('image', { href: c.foto, x: cx - r, y: cy - r, width: 2 * r, height: 2 * r, preserveAspectRatio: 'xMidYMin slice', 'clip-path': `url(#${id})` })]
+      : [s('circle', { cx, cy, r, fill: 'var(--surface-2)' }),
+        s('text', { x: cx, y: cy + r * 0.3, 'text-anchor': 'middle', 'font-size': r * 0.8, 'font-weight': 700, fill: 'var(--ink)' }, initials(nome))]);
+}
+
+// Balança de pratos: inclina para o lado com maior % de Fake.
+function balanceSvg(cands) {
+  const [a, b] = cands.map((c) => ({ ...c, n: c.vereditos.FAKE || 0, p: pct(c.vereditos.FAKE || 0, c.totalVereditos) }));
+  const px = 180, py = 58, L = 128;
+  const deg = Math.max(-16, Math.min(16, (a.p - b.p) * 0.4)); // positivo: lado esquerdo desce
+  const t = (deg * Math.PI) / 180;
+  const ends = [{ x: px - L * Math.cos(t), y: py + L * Math.sin(t) }, { x: px + L * Math.cos(t), y: py - L * Math.sin(t) }];
+  const pan = (end, c) => {
+    const panY = end.y + 80, w = 46;
+    return s('g', {},
+      s('path', { d: `M${end.x} ${end.y}L${end.x - w + 4} ${panY}M${end.x} ${end.y}L${end.x + w - 4} ${panY}`, stroke: 'var(--axis)', 'stroke-width': 1.5 }),
+      s('path', { d: `M${end.x - w} ${panY}h${2 * w}a${w} 17 0 0 1 ${-2 * w} 0z`, fill: 'var(--v-fake)', 'fill-opacity': (0.2 + (0.8 * c.p) / 100).toFixed(2) }),
+      svgAvatar(c.nome, end.x, panY - 24, 20),
+      s('text', { x: end.x, y: panY + 40, 'text-anchor': 'middle', fill: 'var(--ink)', 'font-size': 16, 'font-weight': 750 }, `${c.p}% fake`),
+      s('text', { x: end.x, y: panY + 56, 'text-anchor': 'middle', fill: 'var(--muted)', 'font-size': 12 }, `${candidate(c.nome).curto || c.nome} · ${c.n} de ${c.totalVereditos}`));
+  };
+  return s('svg', { viewBox: '0 0 360 240', role: 'img', 'aria-label': `Balança: ${a.nome} ${a.p}% fake, ${b.nome} ${b.p}% fake` },
+    s('path', { d: `M${px} ${py}V226M${px - 46} 226h92`, stroke: 'var(--ink-2)', 'stroke-width': 4, 'stroke-linecap': 'round' }),
+    s('path', { d: `M${ends[0].x} ${ends[0].y}L${ends[1].x} ${ends[1].y}`, stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-linecap': 'round' }),
+    s('circle', { cx: px, cy: py, r: 7, fill: 'var(--ink)' }),
+    pan(ends[0], a), pan(ends[1], b));
+}
+
+// Duelo espelhado: as contagens de cada veredito, um candidato de cada lado.
+function duel(cands) {
+  const [a, b] = cands;
+  const max = Math.max(1, ...cands.flatMap((c) => VERDICTS.map((v) => c.vereditos[v.key] || 0)));
+  const who = (c, right) => el('div', { class: 'duel__who' + (right ? ' duel__who--r' : '') }, avatar(c.nome, 'md'), el('span', {}, candidate(c.nome).curto || c.nome));
+  const bar = (c, k, right) => {
+    const n = c.vereditos[k] || 0;
+    return el('div', { class: 'duel__bar' + (right ? ' duel__bar--r' : '') },
+      el('span', { class: 'duel__fill', style: `flex:0 0 ${(n / max) * 78}%;background:var(${verdictInfo(k).color})` }),
+      el('b', { class: 'duel__n' }, n));
+  };
+  return el('div', { class: 'duel' },
+    el('div', { class: 'duel__head' }, who(a), el('span', { class: 'muted small' }, '×'), who(b, true)),
+    SCORE_ORDER.map((k) => el('div', { class: 'duel__row' }, bar(a, k), el('span', { class: 'duel__label' }, verdictInfo(k).plural), bar(b, k, true))));
+}
+
+// Régua de 0 (mais fake) a 100 (mais verdade), com a foto de cada candidato na sua posição.
+function rulerSvg(cands) {
+  const x0 = 24, x1 = 336, ty = 74;
+  const pos = (v) => x0 + ((x1 - x0) * v) / 100;
+  const marks = cands.map((c) => ({ c, v: truthIndex(c), x: pos(truthIndex(c)) })).sort((m, n) => m.x - n.x);
+  // Fotos muito próximas se afastam um pouco; o traço continua apontando o valor certo.
+  for (let i = 1; i < marks.length; i++) {
+    const gap = 40 - (marks[i].x - marks[i - 1].x);
+    if (gap > 0) { marks[i - 1].ax = (marks[i - 1].ax ?? marks[i - 1].x) - gap / 2; marks[i].ax = marks[i].x + gap / 2; }
+  }
+  const seg = (v0, v1, color) => s('rect', { x: pos(v0), y: ty, width: pos(v1) - pos(v0) - 2, height: 10, rx: 3, fill: `var(${color})` });
+  return s('svg', { viewBox: '0 0 360 128', role: 'img', 'aria-label': 'Índice de veracidade: ' + marks.map((m) => `${m.c.nome} ${m.v}`).join(', ') },
+    seg(0, 33.3, '--v-fake'), seg(33.3, 66.6, '--v-nebm'), seg(66.6, 100, '--v-fato'),
+    s('text', { x: x0, y: ty + 52, fill: 'var(--muted)', 'font-size': 11 }, '0 · mais fake'),
+    s('text', { x: x1, y: ty + 52, 'text-anchor': 'end', fill: 'var(--muted)', 'font-size': 11 }, 'mais verdade · 100'),
+    marks.map((m) => {
+      const ax = Math.max(x0 + 18, Math.min(x1 - 18, m.ax ?? m.x));
+      return s('g', {},
+        s('path', { d: `M${ax} 52L${m.x} ${ty - 2}`, stroke: candColor(m.c.nome), 'stroke-width': 2 }),
+        s('circle', { cx: m.x, cy: ty + 5, r: 4, fill: 'var(--ink)' }),
+        svgAvatar(m.c.nome, ax, 30, 17),
+        s('text', { x: m.x, y: ty + 32, 'text-anchor': 'middle', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 700 }, `${candidate(m.c.nome).curto || m.c.nome} ${m.v}`));
+    }));
+}
+
+// Velocímetro do índice de veracidade, para os cartões do placar.
+function gauge(c) {
+  const v = truthIndex(c);
+  const cx = 50, cy = 50, r = 38;
+  const at = (val, rr = r) => { const a = Math.PI * (1 - val / 100); return { x: cx + rr * Math.cos(a), y: cy - rr * Math.sin(a) }; };
+  const arc = (v0, v1, color) => { const p0 = at(v0), p1 = at(v1); return s('path', { d: `M${p0.x} ${p0.y}A${r} ${r} 0 0 1 ${p1.x} ${p1.y}`, fill: 'none', stroke: `var(${color})`, 'stroke-width': 9 }); };
+  const tip = at(v, r - 12);
+  return el('div', { class: 'gauge', title: 'Índice de veracidade: Fato = 1, Não é bem assim = 0,5, Fake = 0' },
+    s('svg', { viewBox: '0 0 100 56', role: 'img', 'aria-label': `Índice de veracidade ${v} de 100` },
+      arc(0, 32, '--v-fake'), arc(34, 65, '--v-nebm'), arc(67, 100, '--v-fato'),
+      s('path', { d: `M${cx} ${cy}L${tip.x} ${tip.y}`, stroke: 'var(--ink)', 'stroke-width': 3, 'stroke-linecap': 'round' }),
+      s('circle', { cx, cy, r: 4.5, fill: 'var(--ink)' })),
+    el('div', {}, el('b', {}, v), el('small', {}, 'índice de veracidade')));
 }
 
 function renderScoreboard() {
@@ -450,7 +550,8 @@ function renderScoreboard() {
         el('div', { class: 'score__name' }, candidate(c.nome).curto || c.nome),
         el('div', { class: 'score__sub' }, `${c.partido} · ${c.totalVereditos} vereditos · ${c.falas} falas`),
         c.nome === mostFake ? el('span', { class: 'flag flag--fake' }, 'Mais fakes') : null,
-        c.nome === mostFato ? el('span', { class: 'flag flag--fato' }, 'Mais fatos') : null)),
+        c.nome === mostFato ? el('span', { class: 'flag flag--fato' }, 'Mais fatos') : null),
+      gauge(c)),
     el('div', { class: 'stackbar', role: 'img', 'aria-label': VERDICTS.map((v) => `${v.label}: ${c.vereditos[v.key] || 0}`).join(', ') },
       VERDICTS.map((v) => {
         const n = c.vereditos[v.key] || 0;
@@ -532,9 +633,54 @@ const valueLabels = {
   },
 };
 
+// Itens [rótulo, cor, nome do candidato opcional]; com candidato, a foto entra ao lado.
 function setLegend(items) {
-  $('legend').replaceChildren(...items.map(([label, color]) => el('span', {}, el('i', { style: `background:${color}` }), label)));
+  $('legend').replaceChildren(...items.map(([label, color, nome]) =>
+    el('span', {}, el('i', { style: `background:${color}` }), nome ? avatar(nome, 'xs') : null, label)));
 }
+
+// Fotos carregadas uma vez para desenhar dentro dos gráficos (canvas).
+const photoCache = {};
+function photoImage(nome) {
+  const src = candidate(nome).foto;
+  if (!src) return null;
+  let img = photoCache[src];
+  if (!img) {
+    img = photoCache[src] = new Image();
+    img.onload = () => state.charts.forEach((ch) => ch.draw());
+    img.src = src;
+  }
+  return img.complete && img.naturalWidth ? img : null;
+}
+
+// Foto de cada candidato junto ao rótulo do eixo (embaixo, ou à esquerda no gráfico horizontal).
+const axisAvatars = {
+  id: 'axisAvatars',
+  afterDraw(chart, _args, opts) {
+    if (!opts?.names) return;
+    const horizontal = chart.options.indexAxis === 'y';
+    const scale = horizontal ? chart.scales.y : chart.scales.x;
+    const { ctx } = chart;
+    const r = 13;
+    opts.names.forEach((nome, i) => {
+      const p = scale.getPixelForTick(i);
+      const x = horizontal ? scale.left - r - 4 : p;
+      const y = horizontal ? p : scale.bottom + r + 4;
+      ctx.save();
+      ctx.beginPath(); ctx.arc(x, y, r + 2, 0, 2 * Math.PI); ctx.fillStyle = candColor(nome); ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.clip();
+      const img = photoImage(nome);
+      if (img) {
+        ctx.drawImage(img, x - r, y - r, 2 * r, (2 * r * img.naturalHeight) / img.naturalWidth);
+      } else {
+        ctx.fillStyle = cssVar('--surface-2'); ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+        ctx.fillStyle = cssVar('--ink'); ctx.font = '700 10px system-ui, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(initials(nome), x, y);
+      }
+      ctx.restore();
+    });
+  },
+};
 
 function renderChart() {
   document.querySelectorAll('#chart-types button').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.type === state.chartType)));
@@ -596,7 +742,7 @@ function renderChart() {
   if (type === 'porVeredito') {
     labels = VERDICTS.map((v) => v.label);
     datasets = cands.map((c) => ({ label: c.nome, data: VERDICTS.map((v) => c.vereditos[v.key] || 0), backgroundColor: candColor(c.nome) }));
-    setLegend(cands.map((c) => [c.nome, candColor(c.nome)]));
+    setLegend(cands.map((c) => [c.nome, candColor(c.nome), c.nome]));
   } else {
     labels = cands.map((c) => candidate(c.nome).curto || c.nome);
     datasets = VERDICTS.map((v, i) => ({
@@ -636,12 +782,17 @@ function renderChart() {
     };
   }
   opts.plugins.valueLabels = { mode: type === 'percentual' ? null : type === 'empilhado' ? 'total' : 'each' };
+  // Eixo com candidatos: espaço extra e a foto ao lado de cada nome.
+  if (type !== 'porVeredito') {
+    opts.plugins.axisAvatars = { names: cands.map((c) => c.nome) };
+    opts.layout = { padding: type === 'horizontal' ? { left: 36 } : { bottom: 34 } };
+  }
   if (type === 'empilhado') $('chart-note').textContent = 'Toque ou passe o mouse sobre cada parte para ver a contagem.';
   if (type === 'percentual') $('chart-note').textContent = 'Proporção de cada veredito sobre o total de vereditos do candidato.';
 
   const canvas = el('canvas', { role: 'img', 'aria-label': 'Gráfico de vereditos por candidato' });
   area.append(canvas);
-  state.charts.push(new Chart(canvas, { type: 'bar', data: { labels, datasets }, options: opts, plugins: [valueLabels] }));
+  state.charts.push(new Chart(canvas, { type: 'bar', data: { labels, datasets }, options: opts, plugins: [valueLabels, axisAvatars] }));
   renderDataTable();
 }
 
@@ -655,7 +806,7 @@ function renderEvolution(area, opts) {
     if (!c) return null;
     return metric === 'TOTAL' ? c.totalVereditos : (c.vereditos[metric] || 0);
   };
-  setLegend(names.map((n) => [n, candColor(n)]));
+  setLegend(names.map((n) => [n, candColor(n), n]));
   const canvas = el('canvas', { role: 'img', 'aria-label': 'Evolução dos vereditos ao longo das varreduras' });
   area.append(canvas);
   opts.interaction = { mode: 'index', intersect: false };
