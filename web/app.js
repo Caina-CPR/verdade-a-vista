@@ -202,7 +202,8 @@ async function init() {
   if (!urls.length) return showError('Nenhum debate cadastrado em data/debates.json.');
   // Sem preferência salva, abre o debate mais recente.
   await selectDebate(urls.includes(state.url) ? state.url : urls.at(-1));
-  if (!state.local) setInterval(refresh, REFRESH_MS);
+  // Com todas as checagens encerradas não há o que buscar de novo.
+  if (!state.local && !state.debates.every((d) => d.encerrado)) setInterval(refresh, REFRESH_MS);
 }
 
 // Status ao vivo do GitHub; se não der, o que veio junto com o site.
@@ -351,7 +352,11 @@ function renderDebateHead() {
   const latest = s && run?.id === s.id;
   box.replaceChildren(...[
     s?.emAndamento ? el('span', { class: 'pill pill--live', title: 'A página do g1 diz que a checagem ainda está em andamento' }, 'Checagem ainda em andamento no g1') : null,
-    checked ? el('span', { class: 'pill' }, (state.local ? 'Última verificação ' : 'Verificado a cada 10 minutos · última verificação ') + fmtDate(checked)) : null,
+    // "encerrado" em data/debates.json: o Fato ou Fake terminou a checagem e a varredura parou.
+    d.encerrado && !s?.emAndamento
+      ? el('span', { class: 'pill pill--done' }, `Checagem concluída pelo Fato ou Fake · resultado final de ${fmtDay(d.encerrado)}`)
+      : null,
+    checked ? el('span', { class: 'pill' }, (state.local || d.encerrado ? 'Última verificação ' : 'Verificado a cada 10 minutos · última verificação ') + fmtDate(checked)) : null,
     s && !latest ? el('span', { class: 'pill' }, `Vendo varredura antiga de ${fmtDate(s.extraidoEm)}`) : null,
     s?.modificadoEm ? el('span', { class: 'muted' }, 'Página editada pelo g1 em ', fmtDate(s.modificadoEm)) : null,
   ].filter(Boolean));

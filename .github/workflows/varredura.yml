@@ -8,10 +8,12 @@
 name: Varredura
 
 on:
-  schedule:
-    # A cada 10 minutos, nos minutos 3, 13, 23... O GitHub recomenda fugir da virada da hora,
-    # quando a fila de agendamentos fica cheia e execuções podem atrasar ou ser puladas.
-    - cron: '3-59/10 * * * *'
+  # Agendamento desligado: as checagens dos debates terminaram (24/10/2026).
+  # Para religar num próximo debate, descomente as duas linhas abaixo.
+  # A cada 10 minutos, nos minutos 3, 13, 23... O GitHub recomenda fugir da virada da hora,
+  # quando a fila de agendamentos fica cheia e execuções podem atrasar ou ser puladas.
+  # schedule:
+  #   - cron: '3-59/10 * * * *'
   workflow_dispatch:          # botão "Run workflow" na aba Actions
 
 permissions:

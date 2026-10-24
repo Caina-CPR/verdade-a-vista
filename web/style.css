@@ -175,6 +175,8 @@ a { color: inherit; }
 .debate-head__status { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 10px; font-size: 13px; color: var(--ink-2); }
 .pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); }
 .pill--live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--v-nebm); }
+.pill--done { color: var(--ink); font-weight: 600; }
+.pill--done::before { content: "✓"; display: grid; place-items: center; width: 14px; height: 14px; border-radius: 50%; background: var(--v-fato); color: #fff; font-size: 10px; font-weight: 700; }
 .changes { width: 100%; margin-top: 4px; padding: 10px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); }
 .changes ul { margin: 6px 0 0; padding-left: 18px; }
 

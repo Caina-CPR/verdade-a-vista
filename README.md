@@ -7,6 +7,14 @@ e com os dados brutos para qualquer pessoa conferir.
 Projeto independente, sem vínculo com o Grupo Globo. As checagens são do Fato ou Fake; aqui só
 contamos os vereditos. As explicações devem ser lidas na página original do g1.
 
+## Situação
+
+As checagens dos dois debates do 2º turno terminaram (Band em 22/10, Globo em 24/10/2026) e a
+varredura automática foi desligada: o site mostra o resultado final. Os debates encerrados têm o
+campo `encerrado` em `data/debates.json`. Para acompanhar um novo debate, cadastre-o e religue o
+`schedule` em [`varredura.yml`](.github/workflows/varredura.yml) e/ou a tarefa local
+(`scripts/instalar-disparo.ps1`).
+
 ## Como funciona
 
 ```
