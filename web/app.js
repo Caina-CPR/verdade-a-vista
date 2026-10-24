@@ -389,7 +389,7 @@ function badge(key) {
   return el('span', { class: 'badge', style: `--tone:var(${v.color})` }, el('i'), v.label.toUpperCase());
 }
 
-// Balança da verdade: frase de quem teve mais falas Fake, balança de pratos, duelo e régua.
+// Balança da verdade: frase de quem teve mais falas Fake e a balança de pratos.
 function renderSummary() {
   const cands = state.scan.candidatos.map((c) => ({
     ...c,
@@ -406,18 +406,15 @@ function renderSummary() {
   else if (tie) lead = ['Empate: ', ...byFake.map((c, i) => [i ? ' e ' : '', el('span', { class: 'hl' }, c.nome)]).flat(), ` tiveram ${top.pFake}% das falas checadas classificadas como Fake.`];
   else lead = [el('span', { class: 'hl' }, top.nome), ` teve ${fakeText(top)}.`, ...byFake.slice(1).map((c) => ` ${c.nome}: ${c.fake} (${c.pFake}%).`)];
 
-  const pair = cands.length === 2;
   $('summary').replaceChildren(
     el('h2', { class: 'summary__title', id: 'summary-title' }, 'Balança da verdade'),
     el('p', { class: 'summary__lead' }, lead),
-    pair ? el('div', { class: 'scale-wrap' },
-      el('div', { class: 'balance' }, el('p', { class: 'viz-label' }, 'Peso dos fakes'), balanceSvg(cands)),
-      el('div', {}, el('p', { class: 'viz-label' }, 'Lado a lado'), duel(cands))) : null,
-    el('div', { class: 'ruler' }, el('p', { class: 'viz-label' }, 'Índice de veracidade (0 a 100)'), rulerSvg(cands)),
+    cands.length === 2 ? el('div', { class: 'balance' }, balanceSvg(cands)) : null,
     el('p', { class: 'summary__note' },
       'A balança pesa o percentual de falas classificadas como Fake: desce o lado de quem teve mais. ',
-      'O índice de veracidade é um cálculo nosso sobre os vereditos do Fato ou Fake: Fato vale 1, Não é bem assim vale 0,5 e Fake vale 0, ',
-      'e fazemos a média de cada candidato. O Fato ou Fake escolhe quais falas checar, por isso comparamos proporções e não só totais.'),
+      'O ponteiro de cada cartão abaixo mostra o índice de veracidade, um cálculo nosso sobre os vereditos do Fato ou Fake: ',
+      'Fato vale 1, Não é bem assim vale 0,5 e Fake vale 0, e fazemos a média de cada candidato. ',
+      'O Fato ou Fake escolhe quais falas checar, por isso comparamos proporções e não só totais.'),
   );
 }
 
@@ -473,47 +470,6 @@ function balanceSvg(cands) {
     s('path', { d: `M${ends[0].x} ${ends[0].y}L${ends[1].x} ${ends[1].y}`, stroke: 'var(--ink)', 'stroke-width': 4, 'stroke-linecap': 'round' }),
     s('circle', { cx: px, cy: py, r: 7, fill: 'var(--ink)' }),
     pan(ends[0], a), pan(ends[1], b));
-}
-
-// Duelo espelhado: as contagens de cada veredito, um candidato de cada lado.
-function duel(cands) {
-  const [a, b] = cands;
-  const max = Math.max(1, ...cands.flatMap((c) => VERDICTS.map((v) => c.vereditos[v.key] || 0)));
-  const who = (c, right) => el('div', { class: 'duel__who' + (right ? ' duel__who--r' : '') }, avatar(c.nome, 'md'), el('span', {}, candidate(c.nome).curto || c.nome));
-  const bar = (c, k, right) => {
-    const n = c.vereditos[k] || 0;
-    return el('div', { class: 'duel__bar' + (right ? ' duel__bar--r' : '') },
-      el('span', { class: 'duel__fill', style: `flex:0 0 ${(n / max) * 78}%;background:var(${verdictInfo(k).color})` }),
-      el('b', { class: 'duel__n' }, n));
-  };
-  return el('div', { class: 'duel' },
-    el('div', { class: 'duel__head' }, who(a), el('span', { class: 'muted small' }, '×'), who(b, true)),
-    SCORE_ORDER.map((k) => el('div', { class: 'duel__row' }, bar(a, k), el('span', { class: 'duel__label' }, verdictInfo(k).plural), bar(b, k, true))));
-}
-
-// Régua de 0 (mais fake) a 100 (mais verdade), com a foto de cada candidato na sua posição.
-function rulerSvg(cands) {
-  const x0 = 24, x1 = 336, ty = 74;
-  const pos = (v) => x0 + ((x1 - x0) * v) / 100;
-  const marks = cands.map((c) => ({ c, v: truthIndex(c), x: pos(truthIndex(c)) })).sort((m, n) => m.x - n.x);
-  // Fotos muito próximas se afastam um pouco; o traço continua apontando o valor certo.
-  for (let i = 1; i < marks.length; i++) {
-    const gap = 40 - (marks[i].x - marks[i - 1].x);
-    if (gap > 0) { marks[i - 1].ax = (marks[i - 1].ax ?? marks[i - 1].x) - gap / 2; marks[i].ax = marks[i].x + gap / 2; }
-  }
-  const seg = (v0, v1, color) => s('rect', { x: pos(v0), y: ty, width: pos(v1) - pos(v0) - 2, height: 10, rx: 3, fill: `var(${color})` });
-  return s('svg', { viewBox: '0 0 360 128', role: 'img', 'aria-label': 'Índice de veracidade: ' + marks.map((m) => `${m.c.nome} ${m.v}`).join(', ') },
-    seg(0, 33.3, '--v-fake'), seg(33.3, 66.6, '--v-nebm'), seg(66.6, 100, '--v-fato'),
-    s('text', { x: x0, y: ty + 52, fill: 'var(--muted)', 'font-size': 11 }, '0 · mais fake'),
-    s('text', { x: x1, y: ty + 52, 'text-anchor': 'end', fill: 'var(--muted)', 'font-size': 11 }, 'mais verdade · 100'),
-    marks.map((m) => {
-      const ax = Math.max(x0 + 18, Math.min(x1 - 18, m.ax ?? m.x));
-      return s('g', {},
-        s('path', { d: `M${ax} 52L${m.x} ${ty - 2}`, stroke: candColor(m.c.nome), 'stroke-width': 2 }),
-        s('circle', { cx: m.x, cy: ty + 5, r: 4, fill: 'var(--ink)' }),
-        svgAvatar(m.c.nome, ax, 30, 17),
-        s('text', { x: m.x, y: ty + 32, 'text-anchor': 'middle', fill: 'var(--ink)', 'font-size': 13, 'font-weight': 700 }, `${candidate(m.c.nome).curto || m.c.nome} ${m.v}`));
-    }));
 }
 
 // Velocímetro do índice de veracidade, para os cartões do placar.
