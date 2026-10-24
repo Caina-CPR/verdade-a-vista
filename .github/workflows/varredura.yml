@@ -1,11 +1,16 @@
-# Varre as checagens de hora em hora e grava o resultado em data/.
-# Cada commit desta automação dispara um novo deploy na Vercel.
+# Varre as checagens a cada 10 minutos.
+#
+# - Se o g1 mudou alguma checagem (arquivo novo em data/scans), faz commit na main:
+#   a Vercel publica o site de novo.
+# - Sempre: grava data/status.json (horário da última verificação e erro, se houver) no
+#   branch "status", com um único commit sobrescrito. Esse branch não gera deploy, e o
+#   site lê o arquivo direto do GitHub. Assim não estouramos o limite de deploys da Vercel.
 name: Varredura
 
 on:
   schedule:
-    - cron: '7 * * * *'   # minuto 7 de toda hora (UTC); o GitHub pode atrasar alguns minutos
-  workflow_dispatch:       # botão "Run workflow" na aba Actions
+    - cron: '*/10 * * * *'   # a cada 10 minutos (UTC); o GitHub pode atrasar alguns minutos
+  workflow_dispatch:          # botão "Run workflow" na aba Actions
 
 permissions:
   contents: write
@@ -18,7 +23,7 @@ jobs:
   varrer:
     # Windows PowerShell 5.1: o mesmo ambiente em que o script roda localmente.
     runs-on: windows-latest
-    timeout-minutes: 15
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v5
 
@@ -27,18 +32,35 @@ jobs:
         shell: powershell
         run: .\scripts\varrer.ps1 -Publico
 
-      # Grava mesmo se algum debate falhou: o erro fica registrado em data/status.json.
+      # Roda mesmo se algum debate falhou: o erro fica registrado no status.
       - name: Salvar resultados
         if: always()
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data
-          if git diff --cached --quiet; then
-            echo "Nada para salvar."
-            exit 0
+          quando="$(TZ=BRT3 date '+%d/%m %H:%M') (Brasília)"
+
+          if [ -n "$(git status --porcelain -- data/scans)" ]; then
+            git add data
+            git commit -m "Varredura $quando"
+            git pull --rebase
+            git push
+            echo "Checagem mudou: commit na main."
+          else
+            echo "Nada mudou na checagem; só o status será atualizado."
           fi
-          git commit -m "Varredura $(TZ=BRT3 date '+%d/%m %H:%M') (Brasília)"
-          git pull --rebase
-          git push
+
+          if [ -f data/status.json ]; then
+            dir="$RUNNER_TEMP/status"
+            rm -rf "$dir" && mkdir -p "$dir"
+            cp data/status.json "$dir/status.json"
+            cd "$dir"
+            git init -q -b status
+            git add status.json
+            git commit -q -m "Status $quando"
+            git push -fq "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" status
+            echo "Status publicado no branch status."
+          fi

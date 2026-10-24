@@ -10,16 +10,21 @@ contamos os vereditos. As explicações devem ser lidas na página original do g
 ## Como funciona
 
 ```
-GitHub Actions (de hora em hora)          Vercel (site estático)
-  scripts/varrer.ps1 -Publico     ──►      web/  +  data/
-  lê o g1, grava em data/, commit          redeploy a cada commit
+GitHub Actions (a cada 10 min)              Vercel (site estático)
+  scripts/varrer.ps1 -Publico
+  ├─ checagem mudou → commit na main  ──►   redeploy: web/ + data/
+  └─ sempre → status.json no branch status  (lido ao vivo pela página, sem deploy)
 ```
 
-- A cada hora o workflow [`varredura.yml`](.github/workflows/varredura.yml) varre os debates de
+- A cada 10 minutos o workflow [`varredura.yml`](.github/workflows/varredura.yml) varre os debates de
   [`data/debates.json`](data/debates.json).
-- Uma varredura nova só é salva quando algo mudou na checagem do g1. Se nada mudou, só o horário
-  da última verificação é atualizado. Cada commit do bot fica no histórico do Git como registro.
-- O site na Vercel só lê os arquivos de `data/`. Não há servidor nem banco de dados.
+- Uma varredura nova só é salva (commit na `main`, que publica o site) quando algo mudou na checagem
+  do g1. Cada commit do bot fica no histórico do Git como registro.
+- O horário da última verificação, e o erro se ela falhou, vai para o branch `status`: um único commit,
+  sobrescrito a cada vez. Esse branch não gera deploy (`vercel.json`), o que mantém o site dentro do
+  limite de deploys diários da Vercel. A página lê esse arquivo direto do GitHub e se atualiza sozinha.
+- O site na Vercel só lê arquivos. Não há servidor nem banco de dados.
+- O GitHub pode atrasar execuções agendadas em alguns minutos quando está sobrecarregado.
 
 ## Conferir a varredura (auditoria)
 

@@ -1,8 +1,13 @@
 // Verdade à Vista: lê os arquivos de data/, desenha o placar, os gráficos e o histórico.
 //
 // Dois modos:
-//  - publicado (Vercel): só leitura; o GitHub Actions atualiza data/ de hora em hora.
+//  - publicado (Vercel): só leitura. O GitHub Actions verifica o g1 a cada 10 minutos;
+//    quando a checagem muda, data/ é atualizado e o site é publicado de novo. O horário da
+//    última verificação vem ao vivo do branch "status" do GitHub (STATUS_URL).
 //  - local (server.ps1): /api/config responde, e aparecem os botões de varredura.
+
+const STATUS_URL = 'https://raw.githubusercontent.com/Caina-CPR/verdade-a-vista/status/status.json';
+const REFRESH_MS = 5 * 60 * 1000;
 
 const VERDICTS = [
   { key: 'FATO', label: 'Fato', plural: 'Fatos', color: '--v-fato' },
@@ -185,7 +190,7 @@ async function init() {
     state.local ? config.debates : readData('data/debates.json', []),
     readData('data/candidatos.json', []),
     readData('data/historico.json', []),
-    readData('data/status.json', {}),
+    readStatus(),
   ]);
   state.debates = debates || [];
   state.candidatos = candidatos || [];
@@ -197,6 +202,32 @@ async function init() {
   if (!urls.length) return showError('Nenhum debate cadastrado em data/debates.json.');
   // Sem preferência salva, abre o debate mais recente.
   await selectDebate(urls.includes(state.url) ? state.url : urls.at(-1));
+  if (!state.local) setInterval(refresh, REFRESH_MS);
+}
+
+// Status ao vivo do GitHub; se não der, o que veio junto com o site.
+async function readStatus() {
+  const local = await readData('data/status.json', {});
+  if (state.local) return local;
+  const live = await readData(`${STATUS_URL}?t=${Date.now()}`, null);
+  if (!live) return local;
+  // Fica com a verificação mais recente de cada debate.
+  for (const [url, s] of Object.entries(local)) {
+    if (!live[url] || new Date(live[url].verificadoEm) < new Date(s.verificadoEm)) live[url] = s;
+  }
+  return live;
+}
+
+// Site publicado: busca status e histórico de novo; se saiu varredura nova, mostra ela.
+async function refresh() {
+  if (document.hidden) return;
+  const [history, status] = await Promise.all([readData('data/historico.json', null), readStatus()]);
+  if (status) state.status = status;
+  if (history) state.history = history;
+  const last = latestRun(state.url);
+  const showingLatest = !state.scan || state.scan.id === runsOf(state.url).at(-2)?.id || state.scan.id === last?.id;
+  if (last && state.scan?.id !== last.id && showingLatest) await loadScan(last.id);
+  else { renderDebateTabs(); renderDebateHead(); renderHistory(); }
 }
 
 async function scanUrl(url) {
@@ -319,7 +350,7 @@ function renderDebateHead() {
   const latest = s && run?.id === s.id;
   box.replaceChildren(...[
     s?.emAndamento ? el('span', { class: 'pill pill--live', title: 'A página do g1 diz que a checagem ainda está em andamento' }, 'Checagem ainda em andamento no g1') : null,
-    checked ? el('span', { class: 'pill' }, (state.local ? 'Última verificação ' : 'Atualizado de hora em hora · última verificação ') + fmtDate(checked)) : null,
+    checked ? el('span', { class: 'pill' }, (state.local ? 'Última verificação ' : 'Verificado a cada 10 minutos · última verificação ') + fmtDate(checked)) : null,
     s && !latest ? el('span', { class: 'pill' }, `Vendo varredura antiga de ${fmtDate(s.extraidoEm)}`) : null,
     s?.modificadoEm ? el('span', { class: 'muted' }, 'Página editada pelo g1 em ', fmtDate(s.modificadoEm)) : null,
   ].filter(Boolean));
@@ -349,7 +380,7 @@ function renderDebateHead() {
     $('empty-title').textContent = `${d.titulo || 'Este debate'} ainda não foi varrido`;
     $('empty-text').textContent = state.local
       ? 'Clique em Varrer agora para ler a checagem do Fato ou Fake.'
-      : 'A varredura automática roda de hora em hora. Volte em alguns minutos.';
+      : 'A varredura automática roda a cada 10 minutos. Volte daqui a pouco.';
   }
 }
 

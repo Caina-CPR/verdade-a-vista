@@ -1,5 +1,5 @@
 ﻿# Varredura com histórico em arquivos JSON. Usado pelo server.ps1 (local) e pelo
-# scripts/varrer.ps1 (GitHub Actions, de hora em hora). Depende de lib/FatoOuFake.ps1.
+# scripts/varrer.ps1 (GitHub Actions, a cada 10 minutos). Depende de lib/FatoOuFake.ps1.
 #
 # Estrutura de <DataDir>:
 #   historico.json      resumo de cada varredura salva (ordem cronológica)

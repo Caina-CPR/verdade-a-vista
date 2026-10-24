@@ -1,7 +1,7 @@
 ﻿<#
 .SYNOPSIS
   Varre os debates de data/debates.json e atualiza o histórico. É o que o GitHub Actions
-  roda de hora em hora.
+  roda a cada 10 minutos.
 
 .EXAMPLE
   .\scripts\varrer.ps1 -Publico                  # atualiza data/ (versão pública, vai para o GitHub)

@@ -4,6 +4,11 @@
   "installCommand": "echo sem dependencias",
   "buildCommand": "rm -rf dist && mkdir -p dist && cp -r web/. dist/ && cp -r data dist/data",
   "outputDirectory": "dist",
+  "git": {
+    "deploymentEnabled": {
+      "status": false
+    }
+  },
   "headers": [
     {
       "source": "/data/(.*)",
