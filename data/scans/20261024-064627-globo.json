@@ -1,0 +1,860 @@
+{
+    "id":  "20261024-064627-globo",
+    "modo":  "publico",
+    "extraidoEm":  "2026-10-24T06:46:27-03:00",
+    "fonte":  {
+                  "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/23/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-globo-no-2o-turno-das-eleicoes-2026.ghtml",
+                  "baixadoEm":  "2026-10-24T06:46:27-03:00",
+                  "bytes":  1299401,
+                  "sha256":  "7a7749729640bea7be551dddd8a84d65005b08ffcb6ac39d180724c53877dc53"
+              },
+    "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/23/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-globo-no-2o-turno-das-eleicoes-2026.ghtml",
+    "debate":  "Globo",
+    "titulo":  "FATO OU FAKE: Debate Flávio Bolsonaro x Lula na Globo na eleição 2026",
+    "publicadoEm":  "2026-10-23T22:15:31.944-03:00",
+    "modificadoEm":  "2026-10-24T06:44:18.881-03:00",
+    "emAndamento":  true,
+    "rotulos":  {
+                    "FATO":  "FATO",
+                    "NAO_E_BEM_ASSIM":  "NÃO É BEM ASSIM",
+                    "FAKE":  "FAKE"
+                },
+    "totais":  {
+                   "falas":  37,
+                   "vereditos":  38
+               },
+    "candidatos":  [
+                       {
+                           "nome":  "Flávio Bolsonaro",
+                           "partido":  "PL",
+                           "falas":  23,
+                           "totalVereditos":  23,
+                           "vereditos":  {
+                                             "FATO":  8,
+                                             "NAO_E_BEM_ASSIM":  11,
+                                             "FAKE":  4
+                                         }
+                       },
+                       {
+                           "nome":  "Lula",
+                           "partido":  "PT",
+                           "falas":  14,
+                           "totalVereditos":  15,
+                           "vereditos":  {
+                                             "FATO":  9,
+                                             "NAO_E_BEM_ASSIM":  4,
+                                             "FAKE":  2
+                                         }
+                       }
+                   ],
+    "alegacoes":  [
+                      {
+                          "id":  "flavio-bolsonaro-01",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Aí, esse vídeo, eu peço que a minha equipe coloque agora no meu Instagram [...] o vídeo real sobre o Bolsonaro ter aquele vídeo dele suspirando e ele fala que estava debochando das pessoas que estavam sem ar. É mentira. Se você pegar 10 segundos antes, 10 segundos depois, você vai ver que é exatamente o contrário: é o presidente Bolsonaro criticando que, na época, se defendia que as pessoas precisavam esperar sentir falta de ar para depois irem para o hospital. Naquele momento, que não tinha vacina, não tinha remédio, ninguém sabia o que estava acontecendo direito ainda, ele queria garantir que você pudesse ir até o médico para que o médico pudesse te atender."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-02",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Nós pegamos o Brasil lá em 2019 com cerca de 14 mil obras inacabadas e, apesar de todos os problemas, a gente entregou o Brasil com um pouco mais de 8 mil obras inacabadas."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-03",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Agora, neste ano, o TCU, o Tribunal de Contas da União, acaba de soltar um relatório que existem mais de 11,5 mil obras paralisadas do atual governo, ou seja, o Brasil voltou a ser um grande cemitério de obras."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-04",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Na época do presidente Bolsonaro, você tinha lá os seus R$ 600 do Bolsa Família, que foi o Bolsonaro que deu no mínimo R$ 600."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-05",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Nós fizemos o marco legal do saneamento básico, porque hoje tem aproximadamente 90 milhões de brasileiros que não têm esgoto tratado nas suas casas. Tem aproximadamente 40 milhões de brasileiros que não têm água tratada nas suas casas. E nós fizemos esse marco legal exatamente para que houvesse um investimento e até 2033, nós pudéssemos garantir que mais de 90% dos brasileiros tivessem acesso a esses dois bens básicos. Sabe quem votou contra isso lá no Congresso Nacional? A bancada do PT."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-06",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você prometeu que ia entregar a transposição no Rio São Francisco até 2009. Não entregou. Depois, que iria entregar até 2014. Também não entregou. Sabe quem levou, quem concluiu as obras e fez finalmente chegar água até o Nordeste? Jair Messias Bolsonaro."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-07",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Eu vou investir e vou tratar a internet como infraestrutura, como fez, como começou a fazer o presidente Bolsonaro. Nós instalamos mais de 21,3 mil pontos de acesso em vários locais do Brasil, atingindo mais de 3,1 mil cidades e abrangendo mais de 11 milhões de brasileiros onde, gente? Em escolas, em unidades de saúde."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-08",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Lá na Argentina [...], o Milei começou um governo com 211% de inflação, a taxa de juros lá chegou a 100%."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-09",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Ele [Lula] é o pai do Tigrinho, ele é o pai do cassino on-line. Ele criou, ele liberou. Aí chegando perto da eleição, ele vai e cancela, achando que vai enganar você."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-10",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Meu concorrente prometeu picanha e entregou a abóbora. Ele chegou ao ponto de falar a seguinte frase: \u0027Se a comida está cara, não compra\u0027."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-11",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "[...] foi o CNJ [Conselho Nacional de Justiça] que criou [a audiência de custódia], durante um governo de esquerda, inclusive, quando tinha na presidência o ex-ministro da Justiça dele, Ricardo Lewandowski."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-12",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "O Lula votou contra a Constituição de 88 que criou o SUS."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-13",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "O atual governo está deixando uma dívida de R$ 11 trilhões."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-14",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Lá em outubro de 2022, nas eleições anteriores, a previsão de taxa de juros, se o presidente Bolsonaro continuasse no governo, era que hoje nós tivéssemos uma taxa em torno de 7%. Nós estamos falando de que hoje temos uma taxa de 14%, são 7 pontos percentuais de diferença."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-15",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "[O caso Ana Clara, que morreu aos 5 anos em 2021, atingida por um tiro de fuzil em Niterói] Era uma troca de tiros em uma comunidade conflagrada. Eu quero ajudar a senhora [mãe da garota], inclusive, a saber quem foi o autor desse disparo, porque eu tenho a confiança de que não foi esse policial. Ele sequer foi julgado ainda."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-16",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você gastou mais de R$ 405 bilhões para tentar se eleger nos próximos dias. Você tem dois meses que mandou a Lei Orçamentária Anual, que são as despesas previstas para o ano que vem e nada disso estava previsto."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-17",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Você [Lula] não atualizou a tabela SUS."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-18",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Diferente do atual governo, que fala que o ladrão de celular não tem que ser preso porque é só para roubar uma cervejinha."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-19",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Você está se referindo a um projeto de lei que andou lá na Câmara, que um deputado apresentou uma emenda. Eu sou senador, isso não tem nada a ver com a Câmara, e isso sequer foi aprovado. Isso não existe, simplesmente não existe."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-20",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "São mais de 80 milhões de brasileiros que estão com as contas atrasadas."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-21",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Foi no governo do presidente Bolsonaro que nós anistiamos quase 99% das dívidas dos estudantes que concluíram o ensino superior. Foi o presidente Bolsonaro. Fomos nós que demos o maior reajuste da história para os professores, 33%."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-22",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "FATO",
+                          "alegacao":  "Os estados do Nordeste são administrados pelo PT e por seus parceiros. São os estados mais violentos do Brasil."
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-23",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "O [advogado] Willer [Tomaz] é meu amigo, não é meu sócio. O sócio dele é o seu advogado, é o ex-ministro da Dilma [Rousseff] chamado Eugênio Aragão."
+                      },
+                      {
+                          "id":  "lula-01",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Nós herdamos 6 mil obras paradas e, obviamente, que você não consegue fazer uma obra de infraestrutura no mesmo ano que você começa."
+                      },
+                      {
+                          "id":  "lula-02a",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "A declaração de Lula sobre ter acabado com a fome em 2012"
+                      },
+                      {
+                          "id":  "lula-02b",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "A declaração de Lula sobre 33 milhões de pessoas passando fome ao voltar"
+                      },
+                      {
+                          "id":  "lula-03",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Abrimos 700 novos mercados neste país [...]. E é por isso que o nosso superávit comercial foi para quase R$ 85 bilhões."
+                      },
+                      {
+                          "id":  "lula-04",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Nós anunciamos um Programa de Aceleração do Crescimento de R$ 1,7 trilhão. Quase R$ 800 bilhões já foram executados neste país, criando ferrovia, rodovia, hidrovia, estrada e portos e aeroportos, para que a gente possa fazer com que o Brasil se transforme num grande país produtor de alimentos."
+                      },
+                      {
+                          "id":  "lula-05",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Eles anularam o Fundo Amazônia. Fomos nós que entramos e fizemos o Fundo Amazônia funcionar."
+                      },
+                      {
+                          "id":  "lula-06",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FAKE",
+                          "alegacao":  "O Tigrinho foi criado por vocês [governo Jair Bolsonaro] em 2022."
+                      },
+                      {
+                          "id":  "lula-07",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Eu já fui presidente outras vezes, eu tive presidente no Banco Central e não troquei. O Fernando Henrique Cardoso trocou quatro vezes."
+                      },
+                      {
+                          "id":  "lula-08",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Na Argentina, a pobreza chegou em 40%. O povo está comendo carne de burro. Você disse que quer um modelo igual ao do Milei [presidente da Argentina]."
+                      },
+                      {
+                          "id":  "lula-09",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "Uma taxa de juros que nós herdamos com 13% e que está 13,75% com um Banco Central independente."
+                      },
+                      {
+                          "id":  "lula-10",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Todo mundo assiste ao discurso dele [Flávio Bolsonaro] na Assembleia Legislativa [do Rio de Janeiro] defendendo miliciano. Oferecendo condecoração para miliciano [...]."
+                      },
+                      {
+                          "id":  "lula-11",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FATO",
+                          "alegacao":  "Por que você chamou o Bolsa Família de Bolsa Farelo?"
+                      },
+                      {
+                          "id":  "lula-12",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "FAKE",
+                          "alegacao":  "Eles [governo de Jair Bolsonaro] gastaram quase 30% a mais do que nós [no cartão corporativo]."
+                      },
+                      {
+                          "id":  "lula-13",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "No governo do pai dele, quem tomasse vacina ia virar gay, ia virar jacaré."
+                      },
+                      {
+                          "id":  "lula-14",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "veredito":  "NAO_E_BEM_ASSIM",
+                          "alegacao":  "[...] nós estamos fazendo uma rodovia muito importante, que ninguém teve coragem de fazer, que liga Porto Velho a Manaus, que é a BR-319."
+                      }
+                  ],
+    "checagens":  [
+                      {
+                          "id":  "flavio-bolsonaro-01",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "“Aí, esse vídeo, eu peço que a minha equipe coloque agora no meu Instagram [...] o vídeo real sobre o Bolsonaro ter aquele vídeo dele suspirando e ele fala que estava debochando das pessoas que estavam sem ar. É mentira. Se você pegar 10 segundos antes, 10 segundos depois, você vai ver que é exatamente o contrário: é o presidente Bolsonaro criticando que, na época, se defendia que as pessoas precisavam esperar sentir falta de ar para depois irem para o hospital. Naquele momento, que não tinha vacina, não tinha remédio, ninguém sabia o que estava acontecendo direito ainda, ele queria garantir que você pudesse ir até o médico para que o médico pudesse te atender.”",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-01",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-02",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "“Nós pegamos o Brasil lá em 2019 com cerca de 14 mil obras inacabadas e, apesar de todos os problemas, a gente entregou o Brasil com um pouco mais de 8 mil obras inacabadas.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-02",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-03",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Agora, neste ano, o TCU, o Tribunal de Contas da União, acaba de soltar um relatório que existem mais de 11,5 mil obras paralisadas do atual governo, ou seja, o Brasil voltou a ser um grande cemitério de obras.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-03",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-04",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "“Na época do presidente Bolsonaro, você tinha lá os seus R$ 600 do Bolsa Família, que foi o Bolsonaro que deu no mínimo R$ 600.”",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-04",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-05",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Nós fizemos o marco legal do saneamento básico, porque hoje tem aproximadamente 90 milhões de brasileiros que não têm esgoto tratado nas suas casas. Tem aproximadamente 40 milhões de brasileiros que não têm água tratada nas suas casas. E nós fizemos esse marco legal exatamente para que houvesse um investimento e até 2033, nós pudéssemos garantir que mais de 90% dos brasileiros tivessem acesso a esses dois bens básicos. Sabe quem votou contra isso lá no Congresso Nacional? A bancada do PT.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-05",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-06",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você prometeu que ia entregar a transposição no Rio São Francisco até 2009. Não entregou. Depois, que iria entregar até 2014. Também não entregou. Sabe quem levou, quem concluiu as obras e fez finalmente chegar água até o Nordeste? Jair Messias Bolsonaro.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-06",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-07",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Eu vou investir e vou tratar a internet como infraestrutura, como fez, como começou a fazer o presidente Bolsonaro. Nós instalamos mais de 21,3 mil pontos de acesso em vários locais do Brasil, atingindo mais de 3,1 mil cidades e abrangendo mais de 11 milhões de brasileiros onde, gente? Em escolas, em unidades de saúde.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-07",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-08",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Lá na Argentina [...], o Milei começou um governo com 211% de inflação, a taxa de juros lá chegou a 100%.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-08",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-09",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Ele [Lula] é o pai do Tigrinho, ele é o pai do cassino on-line. Ele criou, ele liberou. Aí chegando perto da eleição, ele vai e cancela, achando que vai enganar você.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-09",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-10",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Meu concorrente prometeu picanha e entregou a abóbora. Ele chegou ao ponto de falar a seguinte frase: \u0027Se a comida está cara, não compra\u0027.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-10",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-11",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"[...] foi o CNJ [Conselho Nacional de Justiça] que criou [a audiência de custódia], durante um governo de esquerda, inclusive, quando tinha na presidência o ex-ministro da Justiça dele, Ricardo Lewandowski.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-11",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-12",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"O Lula votou contra a Constituição de 88 que criou o SUS.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-12",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-13",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"O atual governo está deixando uma dívida de R$ 11 trilhões.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-13",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-14",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "“Lá em outubro de 2022, nas eleições anteriores, a previsão de taxa de juros, se o presidente Bolsonaro continuasse no governo, era que hoje nós tivéssemos uma taxa em torno de 7%. Nós estamos falando de que hoje temos uma taxa de 14%, são 7 pontos percentuais de diferença.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-14",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-15",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"[O caso Ana Clara, que morreu aos 5 anos em 2021, atingida por um tiro de fuzil em Niterói] Era uma troca de tiros em uma comunidade conflagrada. Eu quero ajudar a senhora [mãe da garota], inclusive, a saber quem foi o autor desse disparo, porque eu tenho a confiança de que não foi esse policial. Ele sequer foi julgado ainda.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-15",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-16",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você gastou mais de R$ 405 bilhões para tentar se eleger nos próximos dias. Você tem dois meses que mandou a Lei Orçamentária Anual, que são as despesas previstas para o ano que vem e nada disso estava previsto.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-16",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-17",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "“Você [Lula] não atualizou a tabela SUS.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-17",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-18",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Diferente do atual governo, que fala que o ladrão de celular não tem que ser preso porque é só para roubar uma cervejinha.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE: Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-18",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-19",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Você está se referindo a um projeto de lei que andou lá na Câmara, que um deputado apresentou uma emenda. Eu sou senador, isso não tem nada a ver com a Câmara, e isso sequer foi aprovado. Isso não existe, simplesmente não existe.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-19",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-20",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"São mais de 80 milhões de brasileiros que estão com as contas atrasadas.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-20",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-21",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Foi no governo do presidente Bolsonaro que nós anistiamos quase 99% das dívidas dos estudantes que concluíram o ensino superior. Foi o presidente Bolsonaro. Fomos nós que demos o maior reajuste da história para os professores, 33%.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-21",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-22",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"Os estados do Nordeste são administrados pelo PT e por seus parceiros. São os estados mais violentos do Brasil.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-22",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "flavio-bolsonaro-23",
+                          "candidato":  "Flávio Bolsonaro",
+                          "partido":  "PL",
+                          "fala":  "\"O [advogado] Willer [Tomaz] é meu amigo, não é meu sócio. O sócio dele é o seu advogado, é o ex-ministro da Dilma [Rousseff] chamado Eugênio Aragão.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "flavio-bolsonaro-23",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-01",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Nós herdamos 6 mil obras paradas e, obviamente, que você não consegue fazer uma obra de infraestrutura no mesmo ano que você começa.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-01",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-02",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eu tinha acabado com a fome nesse país em 2012. Eu voltei em 2023 com 33 milhões de pessoas passando fome.\"",
+                          "vereditoOriginal":  "- A declaração de Lula sobre ter acabado com a fome em 2012 #NÃOÉBEMASSIM.\n- A declaração de Lula sobre 33 milhões de pessoas passando fome ao voltar é #FATO.",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-02a",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  "A declaração de Lula sobre ter acabado com a fome em 2012"
+                                            },
+                                            {
+                                                "id":  "lula-02b",
+                                                "veredito":  "FATO",
+                                                "descricao":  "A declaração de Lula sobre 33 milhões de pessoas passando fome ao voltar"
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-03",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Abrimos 700 novos mercados neste país [...]. E é por isso que o nosso superávit comercial foi para quase R$ 85 bilhões.\"",
+                          "vereditoOriginal":  "A declaração é #/FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-03",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-04",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Nós anunciamos um Programa de Aceleração do Crescimento de R$ 1,7 trilhão. Quase R$ 800 bilhões já foram executados neste país, criando ferrovia, rodovia, hidrovia, estrada e portos e aeroportos, para que a gente possa fazer com que o Brasil se transforme num grande país produtor de alimentos.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-04",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-05",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eles anularam o Fundo Amazônia. Fomos nós que entramos e fizemos o Fundo Amazônia funcionar.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-05",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-06",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"O Tigrinho foi criado por vocês [governo Jair Bolsonaro] em 2022.\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-06",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-07",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eu já fui presidente outras vezes, eu tive presidente no Banco Central e não troquei. O Fernando Henrique Cardoso trocou quatro vezes.\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-07",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-08",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Na Argentina, a pobreza chegou em 40%. O povo está comendo carne de burro. Você disse que quer um modelo igual ao do Milei [presidente da Argentina].\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-08",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-09",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Uma taxa de juros que nós herdamos com 13% e que está 13,75% com um Banco Central independente.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-09",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-10",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Todo mundo assiste ao discurso dele [Flávio Bolsonaro] na Assembleia Legislativa [do Rio de Janeiro] defendendo miliciano. Oferecendo condecoração para miliciano [...].\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-10",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-11",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Por que você chamou o Bolsa Família de Bolsa Farelo?\"",
+                          "vereditoOriginal":  "A declaração é #FATO. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-11",
+                                                "veredito":  "FATO",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-12",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"Eles [governo de Jair Bolsonaro] gastaram quase 30% a mais do que nós [no cartão corporativo].\"",
+                          "vereditoOriginal":  "A declaração é #FAKE. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-12",
+                                                "veredito":  "FAKE",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-13",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"No governo do pai dele, quem tomasse vacina ia virar gay, ia virar jacaré.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-13",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      },
+                      {
+                          "id":  "lula-14",
+                          "candidato":  "Lula",
+                          "partido":  "PT",
+                          "fala":  "\"[...] nós estamos fazendo uma rodovia muito importante, que ninguém teve coragem de fazer, que liga Porto Velho a Manaus, que é a BR-319.\"",
+                          "vereditoOriginal":  "#NÃOÉBEMASSIM. Veja por quê:",
+                          "vereditos":  [
+                                            {
+                                                "id":  "lula-14",
+                                                "veredito":  "NAO_E_BEM_ASSIM",
+                                                "descricao":  null
+                                            }
+                                        ]
+                      }
+                  ],
+    "mudancas":  {
+                     "anterior":  "20261024-062611-globo",
+                     "novas":  [
+                                   {
+                                       "id":  "flavio-bolsonaro-23",
+                                       "candidato":  "Flávio Bolsonaro",
+                                       "veredito":  "NAO_E_BEM_ASSIM",
+                                       "alegacao":  "O [advogado] Willer [Tomaz] é meu amigo, não é meu sócio. O sócio dele é o seu advogado, é o ex-ministro da Dilma [Rousseff] chamado Eugênio Aragão."
+                                   }
+                               ],
+                     "removidas":  [
+
+                                   ],
+                     "alteradas":  [
+
+                                   ]
+                 }
+}
