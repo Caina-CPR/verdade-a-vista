@@ -456,7 +456,8 @@ function renderScoreboard() {
         const n = c.vereditos[v.key] || 0;
         return n ? el('span', { style: `flex:${n};background:var(${v.color})`, title: `${v.label}: ${n}` }) : null;
       })),
-    el('ul', { class: 'score__rows' }, SCORE_ORDER.map((k) => {
+    // Maior quantidade primeiro; no empate vale a ordem Fake, Não é bem assim, Fato.
+    el('ul', { class: 'score__rows' }, [...SCORE_ORDER].sort((a, b) => (c.vereditos[b] || 0) - (c.vereditos[a] || 0)).map((k) => {
       const v = verdictInfo(k);
       const n = c.vereditos[k] || 0;
       return el('li', { class: 'score__row', style: `--tone:var(${v.color})` },
