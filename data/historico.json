@@ -34,7 +34,7 @@
                            }
                        ],
         "novas":  null,
-        "verificadoEm":  "2026-10-24T04:46:27-03:00"
+        "verificadoEm":  "2026-10-24T05:06:27-03:00"
     },
     {
         "id":  "20261024-004634-globo",
@@ -479,5 +479,42 @@
                            }
                        ],
         "novas":  1
+    },
+    {
+        "id":  "20261024-050630-globo",
+        "extraidoEm":  "2026-10-24T05:06:30-03:00",
+        "verificadoEm":  "2026-10-24T05:06:29-03:00",
+        "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/23/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-globo-no-2o-turno-das-eleicoes-2026.ghtml",
+        "debate":  "Globo",
+        "titulo":  "FATO OU FAKE: Debate Flávio Bolsonaro x Lula na Globo na eleição 2026",
+        "publicadoEm":  "2026-10-23T22:15:31.944-03:00",
+        "emAndamento":  true,
+        "totais":  {
+                       "falas":  30,
+                       "vereditos":  31
+                   },
+        "candidatos":  [
+                           {
+                               "nome":  "Flávio Bolsonaro",
+                               "partido":  "PL",
+                               "totalVereditos":  16,
+                               "vereditos":  {
+                                                 "FATO":  6,
+                                                 "NAO_E_BEM_ASSIM":  8,
+                                                 "FAKE":  2
+                                             }
+                           },
+                           {
+                               "nome":  "Lula",
+                               "partido":  "PT",
+                               "totalVereditos":  15,
+                               "vereditos":  {
+                                                 "FATO":  9,
+                                                 "NAO_E_BEM_ASSIM":  4,
+                                                 "FAKE":  2
+                                             }
+                           }
+                       ],
+        "novas":  3
     }
 ]
