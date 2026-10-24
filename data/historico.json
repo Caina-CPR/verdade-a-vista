@@ -34,7 +34,7 @@
                            }
                        ],
         "novas":  null,
-        "verificadoEm":  "2026-10-24T01:17:28-03:00"
+        "verificadoEm":  "2026-10-24T01:55:27-03:00"
     },
     {
         "id":  "20261024-004634-globo",
@@ -103,6 +103,43 @@
                                "totalVereditos":  8,
                                "vereditos":  {
                                                  "FATO":  6,
+                                                 "NAO_E_BEM_ASSIM":  1,
+                                                 "FAKE":  1
+                                             }
+                           }
+                       ],
+        "novas":  4
+    },
+    {
+        "id":  "20261024-015531-globo",
+        "extraidoEm":  "2026-10-24T01:55:31-03:00",
+        "verificadoEm":  "2026-10-24T01:55:30-03:00",
+        "url":  "https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/23/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-globo-no-2o-turno-das-eleicoes-2026.ghtml",
+        "debate":  "Globo",
+        "titulo":  "FATO OU FAKE: Debate Flávio Bolsonaro x Lula na Globo na eleição 2026",
+        "publicadoEm":  "2026-10-23T22:15:31.944-03:00",
+        "emAndamento":  true,
+        "totais":  {
+                       "falas":  17,
+                       "vereditos":  18
+                   },
+        "candidatos":  [
+                           {
+                               "nome":  "Flávio Bolsonaro",
+                               "partido":  "PL",
+                               "totalVereditos":  9,
+                               "vereditos":  {
+                                                 "FATO":  3,
+                                                 "NAO_E_BEM_ASSIM":  5,
+                                                 "FAKE":  1
+                                             }
+                           },
+                           {
+                               "nome":  "Lula",
+                               "partido":  "PT",
+                               "totalVereditos":  9,
+                               "vereditos":  {
+                                                 "FATO":  7,
                                                  "NAO_E_BEM_ASSIM":  1,
                                                  "FAKE":  1
                                              }
