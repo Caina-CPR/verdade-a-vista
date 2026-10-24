@@ -39,8 +39,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # --global: vale também para o repositório temporário do branch status.
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           quando="$(TZ=BRT3 date '+%d/%m %H:%M') (Brasília)"
 
           if [ -n "$(git status --porcelain -- data/scans)" ]; then
