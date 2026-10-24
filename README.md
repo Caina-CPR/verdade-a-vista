@@ -41,9 +41,19 @@ que foi baixada. Para conferir, abra a página do g1 e compare fala por fala.
 
 Cada veredito conta uma vez: uma fala com dois vereditos vira duas alegações (`lula-02a`, `lula-02b`).
 
+## Candidatos
+
+`data/candidatos.json` define o nome curto, o partido e a foto de cada candidato (em `web/img/`).
+As fotos são oficiais, com licença de uso livre e crédito exibido no rodapé:
+
+- Flávio Bolsonaro: Agência Senado, via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_(v._AgSen)_(3x4).jpg)
+- Lula: Ricardo Stuckert/PR (CC BY 2.0), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(ombros)_denoise.jpg)
+
+Candidato sem foto cadastrada aparece com as iniciais.
+
 ## Adicionar um debate
 
-Inclua o debate em `data/debates.json` (nome, data e URL do Fato ou Fake) e faça commit. Ele entra
+Inclua o debate em `data/debates.json` (nome, título, turno, data e URL do Fato ou Fake) e faça commit. Ele entra
 na próxima varredura. Para não esperar, rode o workflow na aba **Actions › Varredura › Run workflow**.
 
 ## Rodar no seu computador

@@ -1,30 +1,33 @@
-// Verdade à Vista: lê os arquivos de data/, desenha os gráficos e o histórico.
+// Verdade à Vista: lê os arquivos de data/, desenha o placar, os gráficos e o histórico.
 //
 // Dois modos:
 //  - publicado (Vercel): só leitura; o GitHub Actions atualiza data/ de hora em hora.
 //  - local (server.ps1): /api/config responde, e aparecem os botões de varredura.
 
 const VERDICTS = [
-  { key: 'FATO', label: 'Fato', color: '--v-fato' },
-  { key: 'NAO_E_BEM_ASSIM', label: 'Não é bem assim', color: '--v-nebm' },
-  { key: 'FAKE', label: 'Fake', color: '--v-fake' },
+  { key: 'FATO', label: 'Fato', plural: 'Fatos', color: '--v-fato' },
+  { key: 'NAO_E_BEM_ASSIM', label: 'Não é bem assim', plural: 'Não é bem assim', color: '--v-nebm' },
+  { key: 'FAKE', label: 'Fake', plural: 'Fakes', color: '--v-fake' },
 ];
+// No placar o Fake vem primeiro: é o que o leitor procura.
+const SCORE_ORDER = ['FAKE', 'NAO_E_BEM_ASSIM', 'FATO'];
 const CAND_COLORS = ['--c1', '--c2', '--c3', '--c4'];
 
 const CHART_TYPES = [
-  { key: 'agrupado', label: 'Barras lado a lado' },
+  { key: 'agrupado', label: 'Lado a lado' },
   { key: 'porVeredito', label: 'Por veredito' },
   { key: 'empilhado', label: 'Empilhado' },
   { key: 'percentual', label: '100%' },
   { key: 'horizontal', label: 'Horizontal' },
   { key: 'rosca', label: 'Rosca' },
-  { key: 'evolucao', label: 'Evolução' },
   { key: 'debates', label: 'Entre debates' },
+  { key: 'evolucao', label: 'Evolução' },
 ];
 
 const state = {
   local: false,
   debates: [],
+  candidatos: [],
   status: {},
   flash: null,
   url: loadPref('url', ''),
@@ -40,11 +43,14 @@ const $ = (id) => document.getElementById(id);
 function loadPref(k, def) { try { return localStorage.getItem('fof.' + k) || def; } catch { return def; } }
 function savePref(k, v) { try { localStorage.setItem('fof.' + k, v); } catch { /* sem storage */ } }
 function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
-function verdictInfo(key) { return VERDICTS.find((v) => v.key === key) || { key, label: key, color: '--muted' }; }
-function candColor(i) { return cssVar(CAND_COLORS[i % CAND_COLORS.length]); }
+function verdictInfo(key) { return VERDICTS.find((v) => v.key === key) || { key, label: key, plural: key, color: '--muted' }; }
 function fmtDate(iso) {
   const d = new Date(iso);
   return isNaN(d) ? iso : d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+function fmtDay(ymd, opts = { day: '2-digit', month: '2-digit' }) {
+  const d = new Date(ymd + 'T12:00:00');
+  return isNaN(d) ? '' : d.toLocaleDateString('pt-BR', opts);
 }
 function el(tag, attrs = {}, ...children) {
   const n = document.createElement(tag);
@@ -59,6 +65,8 @@ function el(tag, attrs = {}, ...children) {
   return n;
 }
 const pct = (n, d) => (d ? Math.round((n / d) * 100) : 0);
+const plural = (n, um, varios) => (n === 1 ? um : varios);
+function truncate(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n).trimEnd() + '…' : s; }
 
 async function api(path, opts) {
   const res = await fetch(path, opts);
@@ -75,10 +83,50 @@ async function readData(path, fallback) {
   } catch { return fallback; }
 }
 
-function showError(msg) {
+function showError(msg, warn = false) {
   const a = $('alert');
-  a.textContent = msg;
+  a.textContent = msg || '';
   a.hidden = !msg;
+  a.classList.toggle('alert--warn', !!warn);
+}
+
+// ---------- Tema ----------
+
+function currentTheme() {
+  return document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}
+function updateThemeButton() {
+  $('theme-toggle').setAttribute('aria-label', currentTheme() === 'dark' ? 'Mudar para o tema claro' : 'Mudar para o tema escuro');
+}
+function toggleTheme() {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  savePref('theme', next);
+  updateThemeButton();
+  if (state.scan) renderChart();
+}
+
+// ---------- Candidatos ----------
+
+function candidate(nome) {
+  return state.candidatos.find((c) => c.nome === nome) || { nome, curto: nome.split(' ')[0], partido: '' };
+}
+// A cor segue o candidato (ordem de data/candidatos.json), não a posição no gráfico.
+function candIndex(nome) {
+  const i = state.candidatos.findIndex((c) => c.nome === nome);
+  if (i >= 0) return i;
+  const extra = [...new Set(state.history.flatMap((h) => h.candidatos.map((c) => c.nome)))].filter((n) => !state.candidatos.some((c) => c.nome === n));
+  return state.candidatos.length + Math.max(0, extra.indexOf(nome));
+}
+function candColor(nome) { return cssVar(CAND_COLORS[candIndex(nome) % CAND_COLORS.length]); }
+function initials(nome) { return nome.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]).join('').toUpperCase(); }
+
+function avatar(nome, size = '') {
+  const c = candidate(nome);
+  const cls = 'avatar' + (size ? ` avatar--${size}` : '');
+  const style = `--ring:var(${CAND_COLORS[candIndex(nome) % CAND_COLORS.length]})`;
+  if (c.foto) return el('img', { class: cls, src: c.foto, alt: `Foto de ${nome}`, style, loading: 'lazy', width: 52, height: 52 });
+  return el('span', { class: cls, style, 'aria-hidden': 'true' }, initials(nome));
 }
 
 // ---------- Debates ----------
@@ -90,20 +138,19 @@ function debateName(h) {
   return m ? m[1] : (h.titulo || h.url);
 }
 
-// Debates pré-cadastrados no servidor + qualquer outra URL que já tenha sido varrida.
+// Debates cadastrados em data/debates.json + qualquer outra URL que já tenha sido varrida.
 function debateList() {
-  const list = state.debates.map((d) => ({ url: d.url, nome: d.nome }));
+  const list = state.debates.map((d) => ({ ...d }));
   for (const h of state.history) if (!list.some((d) => d.url === h.url)) list.push({ url: h.url, nome: debateName(h) });
   return list;
 }
+const currentDebate = () => debateList().find((d) => d.url === state.url) || { url: state.url, nome: '' };
 const runsOf = (url) => state.history.filter((h) => h.url === url);
 const latestRun = (url) => runsOf(url).at(-1);
 
 async function selectDebate(url) {
   state.url = url;
   savePref('url', url);
-  $('url').value = url;
-  $('source-link').href = url;
   showError('');
   state.flash = null;
   const last = latestRun(url);
@@ -115,34 +162,41 @@ async function selectDebate(url) {
 
 async function init() {
   buildChartTypeButtons();
+  updateThemeButton();
+  $('theme-toggle').addEventListener('click', toggleTheme);
   $('btn-scan').addEventListener('click', runScan);
   $('btn-scan-all').addEventListener('click', runScanAll);
   $('evo-metric').value = state.evoMetric;
   $('evo-metric').addEventListener('change', (e) => { state.evoMetric = e.target.value; savePref('evoMetric', state.evoMetric); renderChart(); });
   $('f-cand').addEventListener('change', renderChecks);
   $('f-ver').addEventListener('change', renderChecks);
-  $('url').addEventListener('input', () => { $('source-link').href = $('url').value; });
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => state.scan && render());
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    updateThemeButton();
+    if (state.scan && !document.documentElement.dataset.theme) renderChart();
+  });
 
   // O servidor local só existe em localhost; no site publicado nem tentamos.
   const isLocalHost = ['localhost', '127.0.0.1'].includes(location.hostname);
   const config = isLocalHost ? await readData('/api/config', null) : null;
   state.local = config?.modo === 'local';
   $('actions').hidden = !state.local;
-  $('url-box').hidden = !state.local;
-  $('auto-note').hidden = state.local;
 
-  const [debates, history, status] = await Promise.all([
+  const [debates, candidatos, history, status] = await Promise.all([
     state.local ? config.debates : readData('data/debates.json', []),
+    readData('data/candidatos.json', []),
     readData('data/historico.json', []),
     readData('data/status.json', {}),
   ]);
   state.debates = debates || [];
+  state.candidatos = candidatos || [];
   state.history = history || [];
   state.status = status || {};
+  renderPhotoCredits();
+
   const urls = debateList().map((d) => d.url);
   if (!urls.length) return showError('Nenhum debate cadastrado em data/debates.json.');
-  await selectDebate(urls.includes(state.url) ? state.url : (state.history.at(-1)?.url || urls.at(-1)));
+  // Sem preferência salva, abre o debate mais recente.
+  await selectDebate(urls.includes(state.url) ? state.url : urls.at(-1));
 }
 
 async function scanUrl(url) {
@@ -170,11 +224,9 @@ async function runScan() {
   setBusy('btn-scan', 'Varrendo…');
   showError('');
   try {
-    const res = await scanUrl($('url').value.trim());
+    const res = await scanUrl(state.url);
     state.scan = res.scan;
     state.flash = res.salvo ? null : 'Nada mudou desde a última varredura salva. Verificado agora.';
-    state.url = state.scan.url;
-    savePref('url', state.url);
     render();
   } catch (e) {
     showError('A varredura falhou: ' + e.message);
@@ -210,8 +262,6 @@ async function loadScan(id) {
   try {
     state.scan = await api(`data/scans/${id}.json`);
     state.url = state.scan.url;
-    $('url').value = state.scan.url;
-    $('source-link').href = state.scan.url;
     render();
   } catch (e) {
     showError('Não consegui abrir essa varredura: ' + e.message);
@@ -220,109 +270,168 @@ async function loadScan(id) {
 
 // ---------- Render ----------
 
-function renderDebateTabs() {
-  $('debate-tabs').replaceChildren(...debateList().map((d) => {
-    const last = latestRun(d.url);
-    return el('button', {
-      type: 'button', role: 'tab', title: d.url, 'aria-selected': String(d.url === state.url),
-      onclick: () => selectDebate(d.url),
-    }, d.nome, el('small', {}, last ? `${last.totais.vereditos} vereditos` : 'não varrido'));
-  }));
-}
-
 function render() {
   const has = !!state.scan;
   renderDebateTabs();
-  renderAutoNote();
+  renderDebateHead();
   $('empty').hidden = has;
   $('content').hidden = !has;
-  $('status').hidden = !has;
   renderHistory();
-  if (!has) {
-    const d = debateList().find((x) => x.url === state.url);
-    $('empty-title').textContent = d ? `Debate ${d.nome}: ainda não varrido` : 'Comece pela primeira varredura';
-    $('page-title').textContent = d ? `Debate ${d.nome}` : 'Nenhuma varredura ainda';
-    return;
-  }
-  $('page-title').textContent = state.scan.titulo;
-  renderStatus();
-  renderKpis();
+  if (!has) return;
+  renderSummary();
+  renderScoreboard();
   renderFilters();
   renderChart();
   renderChecks();
 }
 
-// Quando foi a última verificação (feita de hora em hora no site publicado) e se ela falhou.
-function renderAutoNote() {
-  const st = state.status[state.url];
-  const checked = st?.verificadoEm || latestRun(state.url)?.verificadoEm;
-  const link = el('a', { href: state.url, target: '_blank', rel: 'noopener noreferrer' }, 'Abrir a checagem no g1 ↗');
-  $('auto-note').replaceChildren(
-    'Atualizado automaticamente a cada hora',
-    checked ? ` · última verificação ${fmtDate(checked)}` : '',
-    ' · ', link,
-  );
-  if (st && st.ok === false) {
-    showError(`A última verificação (${fmtDate(st.verificadoEm)}) falhou: ${st.erro}. Mostrando a última varredura que deu certo.`);
-    $('alert').classList.add('alert--warn');
-  } else $('alert').classList.remove('alert--warn');
+function renderDebateTabs() {
+  $('debate-tabs').replaceChildren(...debateList().map((d) => {
+    const last = latestRun(d.url);
+    return el('button', {
+      type: 'button', role: 'tab', 'aria-selected': String(d.url === state.url),
+      onclick: () => selectDebate(d.url),
+    },
+    el('strong', {}, d.nome, last?.emAndamento ? el('span', { class: 'live-dot', title: 'Checagem ainda em andamento no g1' }) : null),
+    el('small', {}, [d.data ? fmtDay(d.data) : null, last ? `${last.totais.vereditos} vereditos` : 'aguardando'].filter(Boolean).join(' · ')));
+  }));
 }
 
-function renderStatus() {
+// Qual debate, quando foi, quando foi verificado e o link da checagem original.
+function renderDebateHead() {
+  const d = currentDebate();
   const s = state.scan;
-  const run = latestRun(s.url);
-  const latest = run?.id === s.id;
+  const st = state.status[state.url];
+  const run = latestRun(state.url);
+  const checked = st?.verificadoEm || run?.verificadoEm;
+
+  $('source-link').href = state.url;
+  $('debate-eyebrow').textContent = d.turno || 'Checagem do Fato ou Fake';
+  const longDate = d.data ? fmtDay(d.data, { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  $('debate-title').textContent = [d.titulo || (d.nome ? `Debate ${d.nome}` : 'Debate'), longDate].filter(Boolean).join(' · ');
+  document.title = `${d.titulo || d.nome || 'Debate'} · Verdade à Vista`;
+
+  $('debate-meta').textContent = s
+    ? `${s.candidatos.map((c) => `${c.nome} (${c.partido})`).join(' × ')} · ${s.totais.falas} falas checadas pelo Fato ou Fake · ${s.totais.vereditos} vereditos`
+    : '';
+
   const box = $('status');
+  const latest = s && run?.id === s.id;
   box.replaceChildren(...[
-    el('span', { class: 'pill' }, latest ? 'Varredura mais recente' : 'Varredura antiga', ' · ', fmtDate(s.extraidoEm)),
-    latest && run.verificadoEm && fmtDate(run.verificadoEm) !== fmtDate(run.extraidoEm) ? el('span', { class: 'muted' }, `sem mudanças até ${fmtDate(run.verificadoEm)}`) : null,
-    el('span', {}, `${s.totais.falas} falas checadas · ${s.totais.vereditos} vereditos`),
-    s.emAndamento ? el('span', { class: 'pill pill--live', title: 'A página do g1 dizia que a checagem estava em andamento' }, 'Checagem ainda em andamento no g1') : null,
-    s.modificadoEm ? el('span', { class: 'muted' }, 'Página atualizada pelo g1 em ', fmtDate(s.modificadoEm)) : null,
+    s?.emAndamento ? el('span', { class: 'pill pill--live', title: 'A página do g1 diz que a checagem ainda está em andamento' }, 'Checagem ainda em andamento no g1') : null,
+    checked ? el('span', { class: 'pill' }, (state.local ? 'Última verificação ' : 'Atualizado de hora em hora · última verificação ') + fmtDate(checked)) : null,
+    s && !latest ? el('span', { class: 'pill' }, `Vendo varredura antiga de ${fmtDate(s.extraidoEm)}`) : null,
+    s?.modificadoEm ? el('span', { class: 'muted' }, 'Página editada pelo g1 em ', fmtDate(s.modificadoEm)) : null,
   ].filter(Boolean));
-  const m = s.mudancas;
-  if (state.flash) {
-    box.append(el('div', { class: 'changes' }, el('strong', {}, state.flash)));
-  } else if (m) {
-    const items = [
-      ...(m.novas || []).map((c) => ['Nova', c]),
-      ...(m.alteradas || []).map((c) => ['Mudou', c]),
-      ...(m.removidas || []).map((c) => ['Saiu', c]),
-    ];
-    box.append(el('div', { class: 'changes' },
-      el('strong', {}, items.length ? `Mudanças desde a varredura anterior (${items.length})` : 'Nada mudou desde a varredura anterior'),
-      items.length ? el('ul', {}, items.map(([kind, c]) => el('li', {},
-        `${kind}: ${c.candidato} · `,
-        badge(c.veredito),
-        c.vereditoAnterior ? ` (antes: ${verdictInfo(c.vereditoAnterior).label})` : '',
-        ' — ', truncate(c.alegacao, 110)))) : null,
-    ));
+
+  if (s) {
+    const m = s.mudancas;
+    if (state.flash) {
+      box.append(el('div', { class: 'changes' }, el('strong', {}, state.flash)));
+    } else if (m && state.local) {
+      const items = [
+        ...(m.novas || []).map((c) => ['Nova', c]),
+        ...(m.alteradas || []).map((c) => ['Mudou', c]),
+        ...(m.removidas || []).map((c) => ['Saiu', c]),
+      ];
+      box.append(el('div', { class: 'changes' },
+        el('strong', {}, items.length ? `Mudanças desde a varredura anterior (${items.length})` : 'Nada mudou desde a varredura anterior'),
+        items.length ? el('ul', {}, items.map(([kind, c]) => el('li', {},
+          `${kind}: ${c.candidato} · `, badge(c.veredito),
+          c.vereditoAnterior ? ` (antes: ${verdictInfo(c.vereditoAnterior).label})` : '',
+          ' — ', truncate(c.alegacao, 110)))) : null));
+    }
+  }
+
+  if (st && st.ok === false) showError(`A última verificação (${fmtDate(st.verificadoEm)}) falhou: ${st.erro}. Mostrando a última varredura que deu certo.`, true);
+
+  if (!s) {
+    $('empty-title').textContent = `${d.titulo || 'Este debate'} ainda não foi varrido`;
+    $('empty-text').textContent = state.local
+      ? 'Clique em Varrer agora para ler a checagem do Fato ou Fake.'
+      : 'A varredura automática roda de hora em hora. Volte em alguns minutos.';
   }
 }
 
-function truncate(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n).trimEnd() + '…' : s; }
-
 function badge(key) {
   const v = verdictInfo(key);
-  return el('span', { class: 'badge' }, el('i', { style: `background:var(${v.color})` }), v.label.toUpperCase());
+  return el('span', { class: 'badge', style: `--tone:var(${v.color})` }, el('i'), v.label.toUpperCase());
 }
 
-function renderKpis() {
+// Quem teve mais falas falsas: frase de destaque + barras de % Fake e % Fato.
+function renderSummary() {
+  const cands = state.scan.candidatos.map((c) => ({
+    ...c,
+    fake: c.vereditos.FAKE || 0,
+    fato: c.vereditos.FATO || 0,
+    pFake: pct(c.vereditos.FAKE || 0, c.totalVereditos),
+    pFato: pct(c.vereditos.FATO || 0, c.totalVereditos),
+  }));
+  const byFake = [...cands].sort((a, b) => b.pFake - a.pFake || b.fake - a.fake);
+  const top = byFake[0];
+  const tie = byFake.length > 1 && byFake[1].pFake === top.pFake;
+
+  const fakeText = (c) => `${c.fake} ${plural(c.fake, 'fala classificada', 'falas classificadas')} como Fake (${c.pFake}% do que foi checado)`;
+  let lead;
+  if (!cands.some((c) => c.fake)) lead = ['Nenhuma fala foi classificada como Fake neste debate.'];
+  else if (tie) lead = ['Empate: ', ...byFake.map((c, i) => [i ? ' e ' : '', el('span', { class: 'hl' }, c.nome)]).flat(), ` tiveram ${top.pFake}% das falas checadas classificadas como Fake.`];
+  else lead = [el('span', { class: 'hl' }, top.nome), ` teve ${fakeText(top)}.`, ...byFake.slice(1).map((c) => ` ${c.nome}: ${c.fake} (${c.pFake}%).`)];
+
+  const max = 100;
+  $('summary').replaceChildren(
+    el('h2', { class: 'summary__title', id: 'summary-title' }, 'Quem teve mais falas falsas?'),
+    el('p', { class: 'summary__lead' }, lead),
+    el('div', { class: 'summary__rows' }, byFake.map((c) => el('div', { class: 'summary__row' },
+      avatar(c.nome, 'md'),
+      el('div', {},
+        el('div', { class: 'summary__name' }, c.nome, el('small', {}, `${c.partido} · ${c.totalVereditos} vereditos`)),
+        el('div', { class: 'summary__meters' },
+          meterLine('Fake', c.pFake, c.fake, '--v-fake', max),
+          meterLine('Fato', c.pFato, c.fato, '--v-fato', max)))))),
+    el('p', { class: 'summary__note' },
+      'Percentual sobre os vereditos de cada candidato. O Fato ou Fake escolhe quais falas checar, por isso comparamos proporções e não só totais.'),
+  );
+}
+
+function meterLine(label, p, n, color, max) {
+  return el('div', { class: 'meter-line', title: `${n} ${plural(n, 'veredito', 'vereditos')}` },
+    el('span', {}, label),
+    el('b', {}, `${p}%`),
+    el('span', { class: 'meter', role: 'img', 'aria-label': `${label}: ${p}%` }, el('span', { style: `width:${(p / max) * 100}%;background:var(${color})` })));
+}
+
+function renderScoreboard() {
   const cands = state.scan.candidatos;
-  const max = Math.max(1, ...cands.flatMap((c) => VERDICTS.map((v) => c.vereditos[v.key] || 0)));
-  $('kpis').replaceChildren(...cands.map((c, i) => el('article', { class: 'kpi' },
-    el('div', { class: 'kpi__head' },
-      el('span', { class: 'kpi__name' }, el('span', { class: 'kpi__swatch', style: `background:${candColor(i)}` }), c.nome),
-      el('span', { class: 'small muted' }, c.partido)),
-    el('div', { class: 'kpi__total' }, c.totalVereditos),
-    el('div', { class: 'small muted' }, `vereditos em ${c.falas} falas`),
-    el('ul', { class: 'kpi__rows' }, VERDICTS.map((v) => {
-      const n = c.vereditos[v.key] || 0;
-      return el('li', { class: 'kpi__row' },
-        el('span', {}, el('span', { class: 'dot', style: `background:var(${v.color})` }), v.label),
-        el('span', { class: 'meter', title: `${pct(n, c.totalVereditos)}% dos vereditos` },
-          el('span', { style: `width:${(n / max) * 100}%;background:var(${v.color})` })),
-        el('b', {}, n));
+  const share = (c, k) => pct(c.vereditos[k] || 0, c.totalVereditos);
+  const leader = (k) => {
+    const sorted = [...cands].sort((a, b) => share(b, k) - share(a, k));
+    return sorted.length > 1 && share(sorted[0], k) > share(sorted[1], k) && (sorted[0].vereditos[k] || 0) > 0 ? sorted[0].nome : null;
+  };
+  const mostFake = leader('FAKE');
+  const mostFato = leader('FATO');
+
+  const box = $('scoreboard');
+  box.classList.toggle('scoreboard--pair', cands.length === 2);
+  box.replaceChildren(...cands.map((c) => el('article', { class: 'score' },
+    el('div', { class: 'score__head' },
+      avatar(c.nome),
+      el('div', { class: 'score__who' },
+        el('div', { class: 'score__name' }, candidate(c.nome).curto || c.nome),
+        el('div', { class: 'score__sub' }, `${c.partido} · ${c.totalVereditos} vereditos · ${c.falas} falas`),
+        c.nome === mostFake ? el('span', { class: 'flag flag--fake' }, 'Mais fakes') : null,
+        c.nome === mostFato ? el('span', { class: 'flag flag--fato' }, 'Mais fatos') : null)),
+    el('div', { class: 'stackbar', role: 'img', 'aria-label': VERDICTS.map((v) => `${v.label}: ${c.vereditos[v.key] || 0}`).join(', ') },
+      VERDICTS.map((v) => {
+        const n = c.vereditos[v.key] || 0;
+        return n ? el('span', { style: `flex:${n};background:var(${v.color})`, title: `${v.label}: ${n}` }) : null;
+      })),
+    el('ul', { class: 'score__rows' }, SCORE_ORDER.map((k) => {
+      const v = verdictInfo(k);
+      const n = c.vereditos[k] || 0;
+      return el('li', { class: 'score__row', style: `--tone:var(${v.color})` },
+        el('span', { class: 'score__label' }, el('span', { class: 'dot' }), v.plural),
+        el('span', { class: 'score__num' }, n),
+        el('span', { class: 'score__pct' }, `${share(c, k)}%`));
     })),
   )));
 }
@@ -338,7 +447,7 @@ function destroyCharts() { state.charts.forEach((c) => c.destroy()); state.chart
 
 function baseOptions() {
   const ink2 = cssVar('--ink-2'), grid = cssVar('--grid'), axis = cssVar('--axis');
-  Chart.defaults.font.family = 'system-ui, -apple-system, "Segoe UI", sans-serif';
+  Chart.defaults.font.family = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
   Chart.defaults.color = ink2;
   return {
     responsive: true,
@@ -348,7 +457,7 @@ function baseOptions() {
       legend: { display: false },
       tooltip: {
         backgroundColor: cssVar('--surface'), titleColor: cssVar('--ink'), bodyColor: ink2,
-        borderColor: cssVar('--border') || axis, borderWidth: 1, padding: 10, boxPadding: 4, usePointStyle: true,
+        borderColor: axis, borderWidth: 1, padding: 10, boxPadding: 4, usePointStyle: true,
       },
     },
     scales: {
@@ -405,7 +514,6 @@ function renderChart() {
   $('chart-note').textContent = '';
 
   const cands = state.scan.candidatos;
-  const names = cands.map((c) => c.nome);
   const surface = cssVar('--surface');
   const vColors = VERDICTS.map((v) => cssVar(v.color));
   const opts = baseOptions();
@@ -418,7 +526,7 @@ function renderChart() {
     setLegend(VERDICTS.map((v, i) => [v.label, vColors[i]]));
     cands.forEach((c) => {
       const canvas = el('canvas', { 'aria-label': `Vereditos de ${c.nome}`, role: 'img' });
-      area.append(el('div', { class: 'donut' }, el('h3', {}, `${c.nome} (${c.partido})`), el('div', { class: 'donut__canvas' }, canvas)));
+      area.append(el('div', { class: 'mini' }, el('h3', {}, avatar(c.nome, 'sm'), `${c.nome} (${c.partido})`), el('div', { class: 'mini__canvas' }, canvas)));
       const center = {
         id: 'center',
         afterDraw(chart) {
@@ -455,10 +563,10 @@ function renderChart() {
   let labels, datasets;
   if (type === 'porVeredito') {
     labels = VERDICTS.map((v) => v.label);
-    datasets = cands.map((c, i) => ({ label: c.nome, data: VERDICTS.map((v) => c.vereditos[v.key] || 0), backgroundColor: candColor(i) }));
-    setLegend(cands.map((c, i) => [c.nome, candColor(i)]));
+    datasets = cands.map((c) => ({ label: c.nome, data: VERDICTS.map((v) => c.vereditos[v.key] || 0), backgroundColor: candColor(c.nome) }));
+    setLegend(cands.map((c) => [c.nome, candColor(c.nome)]));
   } else {
-    labels = names;
+    labels = cands.map((c) => candidate(c.nome).curto || c.nome);
     datasets = VERDICTS.map((v, i) => ({
       label: v.label,
       data: cands.map((c) => {
@@ -496,7 +604,7 @@ function renderChart() {
     };
   }
   opts.plugins.valueLabels = { mode: type === 'percentual' ? null : type === 'empilhado' ? 'total' : 'each' };
-  if (type === 'empilhado') $('chart-note').textContent = 'Passe o mouse sobre cada parte para ver a contagem.';
+  if (type === 'empilhado') $('chart-note').textContent = 'Toque ou passe o mouse sobre cada parte para ver a contagem.';
   if (type === 'percentual') $('chart-note').textContent = 'Proporção de cada veredito sobre o total de vereditos do candidato.';
 
   const canvas = el('canvas', { role: 'img', 'aria-label': 'Gráfico de vereditos por candidato' });
@@ -507,7 +615,7 @@ function renderChart() {
 
 function renderEvolution(area, opts) {
   const url = state.scan.url;
-  const runs = state.history.filter((h) => h.url === url);
+  const runs = runsOf(url);
   const names = [...new Set(runs.flatMap((r) => r.candidatos.map((c) => c.nome)))];
   const metric = state.evoMetric;
   const value = (run, name) => {
@@ -515,7 +623,7 @@ function renderEvolution(area, opts) {
     if (!c) return null;
     return metric === 'TOTAL' ? c.totalVereditos : (c.vereditos[metric] || 0);
   };
-  setLegend(names.map((n, i) => [n, candColor(i)]));
+  setLegend(names.map((n) => [n, candColor(n)]));
   const canvas = el('canvas', { role: 'img', 'aria-label': 'Evolução dos vereditos ao longo das varreduras' });
   area.append(canvas);
   opts.interaction = { mode: 'index', intersect: false };
@@ -524,17 +632,17 @@ function renderEvolution(area, opts) {
     type: 'line',
     data: {
       labels: runs.map((r) => new Date(r.extraidoEm).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' })),
-      datasets: names.map((n, i) => ({
-        label: n, data: runs.map((r) => value(r, n)), borderColor: candColor(i), backgroundColor: candColor(i),
-        borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBorderColor: cssVar('--surface'), pointBorderWidth: 2, stepped: false, tension: 0,
+      datasets: names.map((n) => ({
+        label: n, data: runs.map((r) => value(r, n)), borderColor: candColor(n), backgroundColor: candColor(n),
+        borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBorderColor: cssVar('--surface'), pointBorderWidth: 2, tension: 0,
       })),
     },
     options: opts,
   }));
   const label = metric === 'TOTAL' ? 'total de vereditos' : `vereditos "${verdictInfo(metric).label}"`;
   $('chart-note').textContent = runs.length < 2
-    ? 'Só há uma varredura salva desta página. Uma nova entra no histórico quando o g1 muda a checagem.'
-    : `Número de ${label} em cada uma das ${runs.length} varreduras desta página.`;
+    ? 'Só há uma varredura salva deste debate. Uma nova entra no histórico quando o g1 muda a checagem.'
+    : `Número de ${label} em cada uma das ${runs.length} varreduras deste debate.`;
   renderDataTable(runs, names, value);
 }
 
@@ -555,7 +663,7 @@ function renderDebates(area) {
 
   names.forEach((name) => {
     const canvas = el('canvas', { role: 'img', 'aria-label': `Vereditos de ${name} em cada debate` });
-    area.append(el('div', { class: 'donut' }, el('h3', {}, name), el('div', { class: 'donut__canvas' }, canvas)));
+    area.append(el('div', { class: 'mini' }, el('h3', {}, avatar(name, 'sm'), name), el('div', { class: 'mini__canvas' }, canvas)));
     const opts = baseOptions();
     opts.scales.x.stacked = true;
     opts.scales.y.stacked = true;
@@ -581,7 +689,7 @@ function renderDebates(area) {
   $('data-table').replaceChildren(el('table', {},
     el('thead', {}, el('tr', {}, el('th', {}, 'Candidato'), el('th', {}, 'Debate'), VERDICTS.map((v) => el('th', { class: 'num' }, v.label)), el('th', { class: 'num' }, 'Total'))),
     el('tbody', {}, names.flatMap((n) => debates.map((d) => el('tr', {},
-      el('td', {}, n), el('td', {}, `${d.nome} (${fmtDate(d.run.extraidoEm)})`),
+      el('td', {}, n), el('td', {}, d.nome),
       VERDICTS.map((v) => el('td', { class: 'num' }, count(d, n, v.key) ?? '—')),
       el('td', { class: 'num' }, count(d, n) ?? '—')))))));
 }
@@ -634,17 +742,19 @@ function renderChecks() {
   const list = state.scan.checagens.filter((c) => (!fc || c.candidato === fc) && (!fv || c.vereditos.some((v) => v.veredito === fv)));
   const box = $('checks');
   if (!list.length) return box.replaceChildren(el('p', { class: 'empty-list' }, 'Nenhuma checagem com esses filtros.'));
-  box.replaceChildren(...list.map((c) => el('article', { class: 'check' },
+  // A borda lateral usa a cor do veredito mais grave da fala.
+  const worst = (c) => SCORE_ORDER.find((k) => c.vereditos.some((v) => v.veredito === k)) || c.vereditos[0]?.veredito;
+  box.replaceChildren(...list.map((c) => el('article', { class: 'check', style: `--tone:var(${verdictInfo(worst(c)).color})` },
     el('div', { class: 'check__meta' },
+      el('span', { class: 'check__who' }, avatar(c.candidato, 'sm'), c.candidato),
       c.vereditos.map((v) => badge(v.veredito)),
-      el('span', {}, `${c.candidato} (${c.partido})`),
       el('span', { class: 'check__id' }, c.id)),
     el('blockquote', {}, c.fala),
     c.vereditos.length > 1 ? c.vereditos.map((v) => el('p', { class: 'check__sub' }, badge(v.veredito), ' ', v.descricao)) : null,
     // Versão pública não traz o texto das explicações: elas ficam na página do g1.
     c.explicacao?.length
       ? el('details', {}, el('summary', {}, 'Por quê?'), renderExplanation(c.explicacao))
-      : el('a', { class: 'check__more small', href: state.scan.url, target: '_blank', rel: 'noopener noreferrer' }, 'Por quê? Leia a explicação no g1 ↗'),
+      : el('a', { class: 'check__more', href: state.scan.url, target: '_blank', rel: 'noopener noreferrer' }, 'Por quê? Leia a explicação no g1 ↗'),
   )));
 }
 
@@ -666,6 +776,15 @@ function renderHistory() {
       el('a', { href: `data/md/${r.id}.md`, download: `verdade-a-vista_${r.id}.md` }, 'baixar'),
       el('a', { href: `data/scans/${r.id}.json`, target: '_blank', rel: 'noopener' }, 'JSON')),
   )));
+}
+
+function renderPhotoCredits() {
+  const withPhoto = state.candidatos.filter((c) => c.foto && c.credito);
+  $('photo-credits').replaceChildren(...(withPhoto.length ? ['Fotos: ', ...withPhoto.flatMap((c, i) => [
+    i ? ' · ' : '',
+    el('a', { href: c.fonteFoto, target: '_blank', rel: 'noopener noreferrer' }, `${c.nome}: ${c.credito}`),
+    c.licenca ? ` (${c.licenca})` : '',
+  ]), ', via Wikimedia Commons.'] : []));
 }
 
 init();

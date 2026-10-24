@@ -34,7 +34,7 @@ New-Item -ItemType Directory -Force -Path $DataDir | Out-Null
 
 $MimeTypes = @{
     '.html' = 'text/html; charset=utf-8'; '.js' = 'text/javascript; charset=utf-8'; '.css' = 'text/css; charset=utf-8'
-    '.svg' = 'image/svg+xml'; '.json' = 'application/json; charset=utf-8'; '.md' = 'text/markdown; charset=utf-8'
+    '.svg' = 'image/svg+xml'; '.jpg' = 'image/jpeg'; '.png' = 'image/png'; '.webp' = 'image/webp'; '.json' = 'application/json; charset=utf-8'; '.md' = 'text/markdown; charset=utf-8'
 }
 
 function Send-Bytes($ctx, [int]$status, [string]$type, [byte[]]$bytes) {
@@ -64,10 +64,11 @@ function Invoke-Request($ctx) {
     $method = $req.HttpMethod
 
     if ($method -eq 'GET' -and $path -eq '/') { return Send-File $ctx (Join-Path $WebDir 'index.html') }
-    if ($method -eq 'GET' -and $path -match '^/([\w.-]+\.(html|js|css|svg))$') { return Send-File $ctx (Join-Path $WebDir $Matches[1]) }
+    if ($method -eq 'GET' -and $path -match '^/((?:img/)?[\w.-]+\.(html|js|css|svg|jpg|png|webp))$') { return Send-File $ctx (Join-Path $WebDir ($Matches[1] -replace '/', '\')) }
     if ($method -eq 'GET' -and $path -match '^/data/((?:[\w-]+/)?[\w.-]+\.(json|md))$') {
         $rel = $Matches[1]
-        if ($rel -eq 'debates.json') { return Send-File $ctx $DebatesFile }
+        # Cadastros vêm sempre de data\ (versionados); o resto, da pasta de dados em uso.
+        if ($rel -in 'debates.json', 'candidatos.json') { return Send-File $ctx (Join-Path $PSScriptRoot "data\$rel") }
         return Send-File $ctx (Join-Path $DataDir ($rel -replace '/', '\'))
     }
     if ($method -eq 'GET' -and $path -eq '/api/config') {

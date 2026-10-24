@@ -1,0 +1,20 @@
+[
+  {
+    "nome": "Flávio Bolsonaro",
+    "curto": "Flávio",
+    "partido": "PL",
+    "foto": "img/flavio-bolsonaro.jpg",
+    "credito": "Agência Senado",
+    "licenca": "Atribuição",
+    "fonteFoto": "https://commons.wikimedia.org/wiki/File:Foto_oficial_do_senador_Fl%C3%A1vio_Bolsonaro_(v._AgSen)_(3x4).jpg"
+  },
+  {
+    "nome": "Lula",
+    "curto": "Lula",
+    "partido": "PT",
+    "foto": "img/lula.jpg",
+    "credito": "Ricardo Stuckert/PR",
+    "licenca": "CC BY 2.0",
+    "fonteFoto": "https://commons.wikimedia.org/wiki/File:Foto_oficial_de_Luiz_In%C3%A1cio_Lula_da_Silva_(ombros)_denoise.jpg"
+  }
+]

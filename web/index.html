@@ -5,58 +5,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Verdade à Vista</title>
   <meta name="description" content="Placar aberto das checagens do Fato ou Fake (g1) nos debates: quantas falas de cada candidato foram fato, fake ou não é bem assim.">
+  <meta name="theme-color" content="#f9f9f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b0b0b'/%3E%3Crect x='7' y='16' width='5' height='9' rx='1.5' fill='%230ca30c'/%3E%3Crect x='14' y='10' width='5' height='15' rx='1.5' fill='%23fab219'/%3E%3Crect x='21' y='6' width='5' height='19' rx='1.5' fill='%23d03b3b'/%3E%3C/svg%3E">
+  <script>
+    // Aplica o tema salvo antes de desenhar a página, para não piscar.
+    try { var t = localStorage.getItem('fof.theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
     <div class="wrap topbar__inner">
-      <div>
-        <h1>Verdade à Vista <span class="muted">· placar das checagens</span></h1>
-        <p class="muted small" id="page-title">Nenhuma varredura ainda</p>
-      </div>
-      <div class="actions" id="actions" hidden>
-        <button id="btn-scan-all" class="btn btn--ghost" type="button" title="Varre todos os debates da lista, um depois do outro">
-          <span class="btn__spinner" aria-hidden="true"></span>
-          <span class="btn__label">Varrer todos</span>
-        </button>
-        <button id="btn-scan" class="btn btn--primary" type="button">
-          <span class="btn__spinner" aria-hidden="true"></span>
-          <span class="btn__label">Varrer agora</span>
+      <a class="brand" href="./" aria-label="Verdade à Vista, início">
+        <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" class="brand__bg"/>
+          <rect x="7" y="16" width="5" height="9" rx="1.5" fill="var(--v-fato)"/>
+          <rect x="14" y="10" width="5" height="15" rx="1.5" fill="var(--v-nebm)"/>
+          <rect x="21" y="6" width="5" height="19" rx="1.5" fill="var(--v-fake)"/>
+        </svg>
+        <span class="brand__text"><strong>Verdade à Vista</strong><small>placar das checagens dos debates</small></span>
+      </a>
+      <div class="topbar__actions">
+        <div class="actions" id="actions" hidden>
+          <button id="btn-scan-all" class="btn btn--ghost" type="button" title="Varre todos os debates, um depois do outro">
+            <span class="btn__spinner" aria-hidden="true"></span>
+            <span class="btn__label">Varrer todos</span>
+          </button>
+          <button id="btn-scan" class="btn btn--primary" type="button" title="Varre o debate selecionado">
+            <span class="btn__spinner" aria-hidden="true"></span>
+            <span class="btn__label">Varrer agora</span>
+          </button>
+        </div>
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Mudar para o tema escuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z"/></svg>
         </button>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="source">
-      <div class="seg seg--debates" id="debate-tabs" role="tablist" aria-label="Debate"></div>
-      <div id="url-box" hidden>
-        <label for="url" class="small muted">Página do debate selecionado. Cole outra URL do Fato ou Fake e clique em Varrer agora para adicionar um debate.</label>
-        <div class="source__row">
-          <input id="url" type="url" spellcheck="false" placeholder="https://g1.globo.com/fato-ou-fake/...">
-          <a id="source-link" class="btn btn--ghost" target="_blank" rel="noopener noreferrer">Abrir página ↗</a>
-        </div>
-      </div>
-      <p id="auto-note" class="small muted auto-note" hidden></p>
+    <aside class="source-banner" aria-label="Fonte dos dados">
+      <span class="source-banner__badge">Fonte</span>
+      <p>
+        Todos os vereditos vêm do <strong>Fato ou Fake</strong>, o serviço de checagem do g1 (Grupo Globo).
+        Aqui só contamos o que eles publicaram, sem nenhuma avaliação própria.
+        <a id="source-link" target="_blank" rel="noopener noreferrer">Ver a checagem original ↗</a>
+      </p>
+    </aside>
+
+    <nav class="debate-tabs" id="debate-tabs" role="tablist" aria-label="Escolha o debate"></nav>
+
+    <section class="debate-head" aria-live="polite">
+      <p class="eyebrow" id="debate-eyebrow"></p>
+      <h1 id="debate-title">Carregando…</h1>
+      <p class="debate-head__meta" id="debate-meta"></p>
+      <div class="debate-head__status" id="status"></div>
     </section>
 
-    <div id="alert" class="alert" hidden></div>
-
-    <section id="status" class="status" hidden></section>
+    <div id="alert" class="alert" role="status" hidden></div>
 
     <section id="empty" class="empty" hidden>
-      <h2 id="empty-title">Comece pela primeira varredura</h2>
-      <p class="muted">Clique em <strong>Varrer agora</strong>. O painel lê a página, conta os vereditos de cada candidato e guarda o resultado no histórico.</p>
+      <h2 id="empty-title">Este debate ainda não foi varrido</h2>
+      <p class="muted" id="empty-text">A varredura automática roda de hora em hora. Volte em alguns minutos.</p>
     </section>
 
     <div id="content" hidden>
-      <section class="kpis" id="kpis"></section>
+      <section class="summary card" id="summary" aria-labelledby="summary-title"></section>
+
+      <section class="scoreboard" id="scoreboard" aria-label="Placar por candidato"></section>
 
       <section class="card">
         <div class="card__head">
-          <h2>Vereditos por candidato</h2>
-          <div class="seg" id="chart-types" role="tablist" aria-label="Tipo de gráfico"></div>
+          <h2>Gráficos</h2>
+          <div class="seg seg--scroll" id="chart-types" role="tablist" aria-label="Tipo de gráfico"></div>
         </div>
         <div class="chart-toolbar" id="evo-toolbar" hidden>
           <label for="evo-metric" class="small muted">Mostrar</label>
@@ -72,14 +95,14 @@
         <p class="small muted chart-note" id="chart-note"></p>
         <details class="data-table">
           <summary>Ver dados em tabela</summary>
-          <div id="data-table"></div>
+          <div id="data-table" class="table-scroll"></div>
         </details>
       </section>
 
       <div class="grid-2">
         <section class="card">
           <div class="card__head">
-            <h2>Checagens</h2>
+            <h2>Falas checadas</h2>
             <div class="filters">
               <select id="f-cand" aria-label="Filtrar candidato"><option value="">Todos os candidatos</option></select>
               <select id="f-ver" aria-label="Filtrar veredito"><option value="">Todos os vereditos</option></select>
@@ -101,10 +124,14 @@
   </main>
 
   <footer class="wrap footer small muted">
-    <p>Projeto independente, sem vínculo com o Grupo Globo. As checagens e os vereditos são do
-    <a href="https://g1.globo.com/fato-ou-fake/" target="_blank" rel="noopener noreferrer">Fato ou Fake (g1)</a>;
-    aqui só contamos os vereditos de cada candidato. Para ler as explicações, abra a página original.</p>
-    <p>Cada veredito conta uma vez; uma fala pode ter mais de um. Os números podem mudar enquanto o g1 atualiza a checagem.</p>
+    <p><strong>Verdade à Vista</strong> é um projeto independente, sem vínculo com o Grupo Globo.
+      As checagens, os vereditos e as explicações são do
+      <a href="https://g1.globo.com/fato-ou-fake/" target="_blank" rel="noopener noreferrer">Fato ou Fake (g1)</a>.
+      A varredura roda de hora em hora e os números podem mudar enquanto o g1 atualiza a checagem.</p>
+    <p>Cada veredito conta uma vez; uma fala pode ter mais de um. O Fato ou Fake escolhe quais falas checar,
+      então o total de checagens pode variar entre candidatos.
+      <a href="https://github.com/Caina-CPR/verdade-a-vista" target="_blank" rel="noopener noreferrer">Código e dados no GitHub</a>.</p>
+    <p id="photo-credits"></p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
